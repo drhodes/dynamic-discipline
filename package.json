@@ -1,0 +1,19 @@
+{
+  "name": "dynamic-discipline-svg",
+  "version": "1.0.0",
+  "description": "a visualization of the dynamic discipline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'no test specified && exit 1'"
+  },
+  "keywords": [
+    "computer",
+    "engineering",
+    "educational"
+  ],
+  "author": "Derek Rhodes <physci@gmail.com> (https://sdf.org/~rhoder)",
+  "license": "MIT",
+  "dependencies": {
+    "@svgdotjs/svg.js": "^3.0.16"
+  }
+}
