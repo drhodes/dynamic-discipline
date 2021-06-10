@@ -1,3 +1,8 @@
+//import src/svg
+import * as SVG from '@svgdotjs/svg.js';
+
+// Learn more about the mode configuration here and what optimizations take place on each value.
+
 function log(msg) {
     console.log("dyndisc> " + msg);
 }
@@ -30,8 +35,10 @@ class Wire {
     }
 }
 
+
 class ValueWire extends Wire {
     constructor() {
+        
         //
     }
 }
@@ -40,6 +47,11 @@ class ValueWire extends Wire {
 class App {
     constructor() {
         log("initing App");
+        var ctx = SVG.SVG();
+        ctx.addTo("#dynamic-discipline");
+        ctx.size(800, 600);
+        console.log(ctx);
+        console.log(new SVG.Point(1,2));
     }
 
     insertIframe() {

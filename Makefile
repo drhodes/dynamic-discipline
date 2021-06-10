@@ -3,7 +3,8 @@ build: ## build
 	npm install --save
 
 bundle: ## webpack bundle
-	npx webpack
+	#npx --mode=development webpack
+	webpack.js --mode=development
 
 test: ## test
 	npm test

@@ -1,19 +1,39 @@
 {
-  "name": "dynamic-discipline-svg",
-  "version": "1.0.0",
-  "description": "a visualization of the dynamic discipline",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo 'no test specified && exit 1'"
-  },
-  "keywords": [
-    "computer",
-    "engineering",
-    "educational"
-  ],
-  "author": "Derek Rhodes <physci@gmail.com> (https://sdf.org/~rhoder)",
-  "license": "MIT",
-  "dependencies": {
-    "@svgdotjs/svg.js": "^3.0.16"
-  }
+    "name": "dynamic-discipline-svg",
+    "version": "1.0.0",
+    "description": "a visualization of the dynamic discipline",
+    "private": true,
+    "scripts": {
+        "test": "echo 'no test specified && exit 1'"
+    },
+    "author": "Derek Rhodes <physci@gmail.com> (https://sdf.org/~rhoder)",
+    "license": "MIT",
+    "devDependencies": {
+        "mocha": "~8.4.0",
+        "webpack": "^5.38.1",
+        "webpack-cli": "^4.7.2"
+    },
+    "dependencies": {
+        "@svgdotjs/svg.js": "^3.0.16",
+        "lodash": "^4.17.21"
+    },
+    
+    "watch": {
+        "bundle": {
+            "patterns": ["src", "dist/index.html"],
+            "extensions": "js, html",
+            "delay": "500",
+            "runOnChangeOnly": false
+        }
+    },
+    "scripts": {
+        "bundle": "make bundle",
+        "watch": "npm-watch"
+    },
+  
+    "keywords": [
+        "computer",
+        "engineering",
+        "educational"
+    ]
 }

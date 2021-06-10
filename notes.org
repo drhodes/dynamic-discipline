@@ -1,5 +1,19 @@
+* Dynamic Discipline
+** Setting up the project
 
-* Start here to get up and running with webpack
+*** get your javascript project off the ground
+off the ground.
+
+*** Start here to get up and running with webpack
 https://webpack.js.org/guides/getting-started/
 
+*** setup a makefile
+for some stuff
+
+*** setup a filewatcher for npm
+https://www.npmjs.com/package/npm-watch
+
+** Libraries
+SVG.js is the library that will do the lion share of the work.
+https://svgjs.dev/docs/3.0
 
