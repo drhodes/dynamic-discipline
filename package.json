@@ -4,7 +4,8 @@
     "description": "a visualization of the dynamic discipline",
     "private": true,
     "scripts": {
-        "test": "echo 'no test specified && exit 1'"
+        "bundle": "make bundle",
+        "watch": "npm-watch"
     },
     "author": "Derek Rhodes <physci@gmail.com> (https://sdf.org/~rhoder)",
     "license": "MIT",
@@ -15,22 +16,20 @@
     },
     "dependencies": {
         "@svgdotjs/svg.js": "^3.0.16",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "npm-watch": "^0.9.0"
     },
-    
     "watch": {
         "bundle": {
-            "patterns": ["src", "dist/index.html"],
+            "patterns": [
+                "src",
+                "dist/index.html"
+            ],
             "extensions": "js, html",
             "delay": "500",
             "runOnChangeOnly": false
         }
     },
-    "scripts": {
-        "bundle": "make bundle",
-        "watch": "npm-watch"
-    },
-  
     "keywords": [
         "computer",
         "engineering",
