@@ -104,13 +104,6 @@ class Poly {
     }
 }
 
-// class ValueWire extends Wire {
-//     constructor() {
-//         super(Wire);
-//     }
-//     //    
-// }
-
 // -----------------------------------------------------------------------------
 class App {
     static ctx = SVG.SVG();
@@ -137,32 +130,4 @@ class App {
 }
 
 new App();
-
-
-// class Div {
-//     static ctx = SVG.SVG();
-//     static scale = 50;
-//     constructor(w, h, divname) {
-//         log("initing Div");
-//         App.ctx.addTo("#wire1");
-//         App.ctx.size(w, h);
-        
-//         let poly = new Poly(50, 50);
-//         poly.up(50).rt(50).dn(50).lt(50).done();
-//         let p2 = poly.clone().subdivide(5).dashspeed(10).randomize(4).done();
-        
-//         function foof() {
-//             p2.remove();
-//             poly.update();
-//             p2 = poly.clone().subdivide(5).randomize(8).done();
-//             window.requestAnimationFrame(foof);
-//         }
-//         foof();
-//     }
-
-//     update() { }
-// }
-
-
-// new Div(400, 100, "#wire1");
 
