@@ -3,16 +3,6 @@ import * as SVG from '@svgdotjs/svg.js';
 function log(msg) { console.log("dyndisc> " + msg); }
 
 // -----------------------------------------------------------------------------
-class Segment {
-    constructor(ctx, p1, p2) {
-        // connect two points with a conducting element        
-        // currently this is an SVG line
-    }
-    setP1(p) { this.p1 = p; }
-    setP2(p) { this.p2 = p; }
-}
-
-// -----------------------------------------------------------------------------
 class WireState {
     constructor(ctx) {        
     }
