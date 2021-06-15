@@ -21,6 +21,10 @@ export class Poly {
     }
 
     remove() { this.polyline.remove(); }
+
+    rotate(deg) {
+        this.polyline.transform({rotate: deg});
+    }
     
     dashspeed(n) {
         this._dashspeed = n;
@@ -61,8 +65,9 @@ export class Poly {
     };   
     up(px) { return this.push(0, -px); }
     dn(px) { return this.push(0, +px); }
-    rt(px) { return this.push(+px, 0); }
     lt(px) { return this.push(-px, 0); }
+    rt(px) { return this.push(+px, 0); }
+    to(dx, dy) { return this.push(dx, dy); }
     
     done() {
         if (this.polyline) this.polyline.remove();
@@ -88,7 +93,6 @@ export class Poly {
         return this;
     }
 
-    
     undashed() {
         this.polyline.stroke({ dasharray: "0,0"});
         return this;
