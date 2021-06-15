@@ -1,6 +1,9 @@
 bundle: ## webpack bundle
 	webpack.js --mode=development
 
+watch:
+	npm run watch
+
 test: ## test
 	npm test
 
