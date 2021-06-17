@@ -22,20 +22,19 @@
 
   </head>
   
-  <body style="font-family: 'Crimson Text', serif;">   
+  <body bgcolor="#fefefe" style="font-family: 'Crimson Text', serif;">   
     <center>
       <h1>Understanding the Dynamic Discipline</h1>
       <h2>An Adventure in the Foundation of Sequential Digital Logic</h2>
     </center>
     <hr>
-    WAVEFORM
-    <div id="wave-id1" name="Q" group="wavegroup1" h="30" w="700"></div>
+    <div group="wavegroup1">
+      <div id="wave-id1" name="D" h="50" w="700"></div>
+      <div id="wave-id2" name="Q" h="50" w="700"></div>
+    </div>
 
     
     <hr>
-    
-    
-
     
     <div id="wirex"></div>
     
@@ -48,50 +47,44 @@
 
     <p>
       Combinational devices use the static discipline to mitigate
-      noise on their terminals.  Sequential devices use the <b>dynamic
-        discipline</b>
-      
-      
-      focuses on time. enters the circuit by
-      using lenciency during ... .timing to the mix and can elude even
-      the most careful thinkers. So beware!
+      noise.
+    </p>
+
+    <p> Sequential devices use the <b>dynamic discipline</b> to
+      mitigate glitches around clock edges.
     </p>
     
     <p> The plan is to use feedback with a lenient mux to build a
-    reliable D-latch. </p>
+      reliable D-latch. </p>
     
     <div id="mux-2"></div>
     
     <p>
-    Here are the steps outlined in the sequential logic section of the
-    computation structures <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
+      Here are the steps outlined in the sequential logic section of the
+      computation structures <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
     </p>
     
     <h2> To reliably latch 1 </h2>
     <h3> Apply 1 to D, holding G=1 </h3>
-    <h3> After another TPD, Q’ & D both valid for TPD; will hold Q=1 independently of G </h3>
+    <h3> After another TPD, Q’ & D both valid for $t_{PD}$; will hold Q=1 independently of G </h3>
     <h3> Set G=0, while Q’ & D hold Q=D </h3>
     <h3> After TPD, 1 appears at Q=Q’ </h3>
     <h3> After another TPD, G=0 and Q’ are sufficient to hold Q=1 independently of D </h3>
-    
-    - To reliably latch 0:
-    • Apply 0 to D, holding G=1
-    • After another TPD, Q’ & D both valid for TPD; will hold Q=0 independently of G
-    • Set G=0, while Q’ & D hold Q=D
-    • After TPD, 0 appears at Q=Q’
-    • After another TPD, G=0 and Q’ are sufficient to hold Q=0 independently of D
-    </pre>
 
-    <hr>
-    <h2>References</h2>
-    <p>
-      [1] <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-004-computation-structures-spring-2017/c5/c5s2/c5s2v2/">OpenCourseWare, 6.004 (2017), Unit 5 Sequential Logic</a>
-      <br>
-      [2] <a href="https://web.archive.org/web/20210414193341/https://doe.carleton.ca/~shams/ELEC3500/hazards.pdf"> Glitches and Hazards in Digital Circuits</a>
-    </p>
-    
-    <script src="main.js"></script>    
-  </body>  
+<hr>
+<h2>References</h2>
+
+<p>
+
+  [ ] <a href="https://computationstructures.org/notes">Computation Structures</a>  
+  <br>
+  [] <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-004-computation-structures-spring-2017/c5/c5s2/c5s2v2/">OpenCourseWare, 6.004 (2017), Unit 5 Sequential Logic</a>
+  <br>
+  [] <a href="https://web.archive.org/web/20210414193341/https://doe.carleton.ca/~shams/ELEC3500/hazards.pdf"> Glitches and Hazards in Digital Circuits</a>
+</p>
+
+<script src="main.js"></script>    
+</body>  
 </html>
 
 

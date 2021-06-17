@@ -4,7 +4,7 @@ import {Wire} from './wire.js';
 import {Term} from './term.js';
 import {err, log} from './err.js';
 import {Waveform} from './waveform.js';
-
+import {L, H, X} from './sig.js';
 // -----------------------------------------------------------------------------
 class WireWithLittleNoise {
     constructor() {
@@ -67,17 +67,18 @@ class Mux2 {
         inputD.nudgeLabel(-.5, -.19);
         inputQ.nudgeLabel(-.5, -.19);
         inputG.nudgeLabel(.4, .7);
-
-
-        
-        // let feedbackWire = new Wire( ctx, o.left+U + outputQ.leadLength(), o.top+(2*U));
-        // // the following done() and init() methods are awful.
-        // feedbackWire.rt(3*U/2).up(3*U).lt(9*U/2).dn(2*U).done().init().dashed();
-        // feedbackWire.animate();
     }
 }
 
 new Mux2(40);
 
-console.log(document.getElementById("wave-id1"));
-new Waveform(document.getElementById("wave-id1"),{} );
+//new Waveform(document.getElementById("wave-id1"), [], {});
+// new Waveform(document.getElementById("wave-id1"), [[0, H]], {});
+
+new Waveform(document.getElementById("wave-id1"),
+             [[0, H], [10, H], [27, L], [30, H], [33, L], [50, H]],
+             50, {});
+
+new Waveform(document.getElementById("wave-id2"),
+             [[0, H], [10, H], [27, L], [30, H], [33, L], [50, H]],
+             50, {});

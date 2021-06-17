@@ -68,6 +68,13 @@ export class Poly {
     lt(px) { return this.push(-px, 0); }
     rt(px) { return this.push(+px, 0); }
     to(dx, dy) { return this.push(dx, dy); }
+
+    // accrete the next point at absolute pixel values.
+    toAbs(x, y) {
+        this.segments.push(x, y);
+        return this;
+    }
+
     
     done() {
         if (this.polyline) this.polyline.remove();
