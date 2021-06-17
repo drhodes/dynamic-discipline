@@ -41,15 +41,15 @@ class Attributes {
     getAttr(name) {
         let val = this.div.getAttribute(name);
         if (val) return val;
-        die("could not find attr: " + name);        
+        die("could not find attribute: " + name);        
     }
 }
-
 
 const BACKGROUND_COLOR = "#d6f7ff";
 const BORDER_COLOR = "#aaa";
 const WAVE_COLOR = "#000";
 const WAVE_WIDTH = 3; // pixels, the width of the wave line.
+const LEFT_SIDE = 15; // margin for signal name on the left.
 
 export class Waveform {
     // extends event harness, an event dispatcher
@@ -60,7 +60,12 @@ export class Waveform {
         // circuit terminal.
         this.div = div;
 
+        // TODO consider a transition container class.
         // TODO if transitions does not start at 0 then die.
+        // TODO if transitions does not contain a transition at an instant
+        // in time equal to the duration - that is - the last
+        // transition happens at some point in the middle of the
+
         this.transitions = transitions.map(t => new Transition(t[0], t[1]));
         
         this.duration = totalDuration; 
@@ -70,7 +75,7 @@ export class Waveform {
         this.heightPx = this.attrs.getAttr("h");
         this.widthPx = this.attrs.getAttr("w");
         this.name  = this.attrs.getAttr("name");
-
+        
         var elementId = "#" + this.attrs.getAttr("id");
         this.ctx = SVG.SVG().addTo(elementId).size(this.widthPx, this.heightPx);
         this.render();        
@@ -86,32 +91,46 @@ export class Waveform {
         return m * ns; // :: (pixels/time) * time = pixels
     }
     
-    
     // allocate mutable SVG elements
     render() {
         // background box.
 
         var rect = this.ctx
-            //.rect(this.widthPx, this.heightPx)
-            .rect(this.widthPx, this.heightPx)
-            .fill(BACKGROUND_COLOR);
+            .rect(this.widthPx-LEFT_SIDE, this.heightPx)
+            .fill(BACKGROUND_COLOR)
+            .move(LEFT_SIDE, 0);
         
-        var topLine = this.ctx.line(0, 0, this.widthPx, 0)
+        var topLine = this.ctx.line(LEFT_SIDE, 0, this.widthPx, 0)
             .stroke({ width: 2, color:BORDER_COLOR });
-        var bottomLine = this.ctx.line(0, this.heightPx, this.widthPx, this.heightPx)
+        var bottomLine = this.ctx.line(LEFT_SIDE, this.heightPx, this.widthPx, this.heightPx)
             .stroke({ width: 2, color:BORDER_COLOR });
 
         const BAND_OFFSET = 10;
         // funcspec lines
         var lineVOL = this.ctx
-            .line(0, BAND_OFFSET, this.widthPx, BAND_OFFSET)
+            .line(LEFT_SIDE, BAND_OFFSET, this.widthPx, BAND_OFFSET)
             .stroke({ width: .5, color:BORDER_COLOR });
         var lineVOH = this.ctx
-            .line(0, this.heightPx - BAND_OFFSET, this.widthPx, this.heightPx - BAND_OFFSET)
+            .line(LEFT_SIDE, this.heightPx - BAND_OFFSET, this.widthPx, this.heightPx - BAND_OFFSET)
             .stroke({ width: .5, color:BORDER_COLOR });
 
+        this.renderName();
         this.renderWave();
     }
+
+    renderName() {
+        // put the signal label in the left margin, centered vertically.
+        const TEXT_Y = this.heightPx / 2 - 8;
+        const TEXT_X = 0;
+        
+        this.ctx.text(this.name)
+            .fill("black")
+            .font({family: 'Courier'})
+            .move(TEXT_X, TEXT_Y);
+
+        
+    }
+
 
     renderWave() {
         var ts = this.transitions;
@@ -120,7 +139,7 @@ export class Waveform {
         const RIGHT_BORDER = this.widthPx;
         
         let polyline;
-        
+       
         switch (ts.length) {
         case 0 :
 
@@ -136,17 +155,17 @@ export class Waveform {
             // waveform for the entire duration.
 
             var y = ts[0].value == H ? TOP_BORDER : BOTTOM_BORDER;
-            polyline = new Poly(this.ctx, 0, y);
+            polyline = new Poly(this.ctx, LEFT_SIDE, y);
             polyline.rt(RIGHT_BORDER);            
             break;
             
         default:
             // many transitions.
             var curValue = ts[0].value;
-            var curX = 0;
+            var curX = LEFT_SIDE;
             
             var y = curValue == H ? TOP_BORDER : BOTTOM_BORDER;
-            polyline = new Poly(this.ctx, 0, y);
+            polyline = new Poly(this.ctx, LEFT_SIDE, y);
 
             ts.slice(1).map(trans => {
                 var nextX = this.pxFromTime(trans.t);               
@@ -156,15 +175,8 @@ export class Waveform {
                 curX = nextX;
             });
         }
-
-        // need to refactor polyline to remove the requirement to call .done() 
-        polyline.done().color("black").width(WAVE_WIDTH);
         
-        // if transitions does not contain a transition at an instant
-        // in time equal to the duration - that is - the last
-        // transition happens at some point in the middle of the
-
+        // TODO need to refactor polyline to remove the requirement to call .done() 
+        polyline.done().color("black").width(WAVE_WIDTH);
     }
-
-    
 }
