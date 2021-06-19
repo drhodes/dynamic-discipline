@@ -49,7 +49,7 @@ const BACKGROUND_COLOR = "#d6f7ff";
 const BORDER_COLOR = "#aaa";
 const WAVE_COLOR = "#000";
 const WAVE_WIDTH = 3; // pixels, the width of the wave line.
-const LEFT_SIDE = 15; // margin for signal name on the left.
+const LEFT_MARGIN = 20; // margin for signal name on the left.
 
 export class Waveform {
     // extends event harness, an event dispatcher
@@ -96,22 +96,22 @@ export class Waveform {
         // background box.
 
         var rect = this.ctx
-            .rect(this.widthPx-LEFT_SIDE, this.heightPx)
+            .rect(this.widthPx-LEFT_MARGIN, this.heightPx)
             .fill(BACKGROUND_COLOR)
-            .move(LEFT_SIDE, 0);
+            .move(LEFT_MARGIN, 0);
         
-        var topLine = this.ctx.line(LEFT_SIDE, 0, this.widthPx, 0)
+        var topLine = this.ctx.line(LEFT_MARGIN, 0, this.widthPx, 0)
             .stroke({ width: 2, color:BORDER_COLOR });
-        var bottomLine = this.ctx.line(LEFT_SIDE, this.heightPx, this.widthPx, this.heightPx)
+        var bottomLine = this.ctx.line(LEFT_MARGIN, this.heightPx, this.widthPx, this.heightPx)
             .stroke({ width: 2, color:BORDER_COLOR });
 
         const BAND_OFFSET = 10;
         // funcspec lines
         var lineVOL = this.ctx
-            .line(LEFT_SIDE, BAND_OFFSET, this.widthPx, BAND_OFFSET)
+            .line(LEFT_MARGIN, BAND_OFFSET, this.widthPx, BAND_OFFSET)
             .stroke({ width: .5, color:BORDER_COLOR });
         var lineVOH = this.ctx
-            .line(LEFT_SIDE, this.heightPx - BAND_OFFSET, this.widthPx, this.heightPx - BAND_OFFSET)
+            .line(LEFT_MARGIN, this.heightPx - BAND_OFFSET, this.widthPx, this.heightPx - BAND_OFFSET)
             .stroke({ width: .5, color:BORDER_COLOR });
 
         this.renderName();
@@ -131,7 +131,6 @@ export class Waveform {
         
     }
 
-
     renderWave() {
         var ts = this.transitions;
         const BOTTOM_BORDER = this.heightPx - WAVE_WIDTH/2; // hug the bottom border.
@@ -142,9 +141,9 @@ export class Waveform {
        
         switch (ts.length) {
         case 0 :
-
             // if transitions is an empty list then the waveform
             // should be zero for all time.
+            
             polyline = new Poly(this.ctx, 0, BOTTOM_BORDER);
             polyline.rt(RIGHT_BORDER);
             break;
@@ -155,17 +154,18 @@ export class Waveform {
             // waveform for the entire duration.
 
             var y = ts[0].value == H ? TOP_BORDER : BOTTOM_BORDER;
-            polyline = new Poly(this.ctx, LEFT_SIDE, y);
+            polyline = new Poly(this.ctx, LEFT_MARGIN, y);
             polyline.rt(RIGHT_BORDER);            
             break;
             
         default:
             // many transitions.
+            
             var curValue = ts[0].value;
-            var curX = LEFT_SIDE;
+            var curX = LEFT_MARGIN;
             
             var y = curValue == H ? TOP_BORDER : BOTTOM_BORDER;
-            polyline = new Poly(this.ctx, LEFT_SIDE, y);
+            polyline = new Poly(this.ctx, LEFT_MARGIN, y);
 
             ts.slice(1).map(trans => {
                 var nextX = this.pxFromTime(trans.t);               
