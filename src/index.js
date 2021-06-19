@@ -1,13 +1,7 @@
-import * as SVG from '@svgdotjs/svg.js';
-import {Poly} from './poly.js';
-import {Wire} from './wire.js';
-import {Term} from './term.js';
 import {err, log} from './err.js';
+import {L, H, X} from './transition.js';
 import {Waveform} from './waveform.js';
-import {L, H, X} from './sig.js';
 import {Mux2} from './mux2.js';
-
-
 
 let mux2 = new Mux2(40);
 mux2.nudgeLabel("outputQ", 1.1, .14);
