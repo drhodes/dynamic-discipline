@@ -1,38 +1,8 @@
 import * as SVG from '@svgdotjs/svg.js';
 import {die, log} from './err.js';
-import {L, H, X} from './sig.js';
 import {Poly} from './poly.js';
-
-// A waveform
-//
-// Use declarative definition in html
-//
-// <div id="wave-id1" name="Q" group="1"></div>
-
-class Transition {
-    constructor(t, logicValue) { // riseTime? May not need to consider this yet!
-        this.t = t;
-        // L, H or X.        
-        this.value = logicValue;
-    }
-}
-
-class WaveHandle {
-    constructor() {
-        // this belongs with a transition
-    }
-}
-
-class FunctionalSpec {
-    constructor(vil, vol, vih, voh) {
-        // An interactive signal which is optionally associated with
-        // circuit terminal.
-        this.vil = vil;
-        this.vol = vol;
-        this.vih = vih;
-        this.voh = voh;
-    }
-}
+import {Transition} from './transition.js';
+import {L, H, X} from './transition.js';
 
 class Attributes {
     constructor(div) {
@@ -41,7 +11,7 @@ class Attributes {
     getAttr(name) {
         let val = this.div.getAttribute(name);
         if (val) return val;
-        die("could not find attribute: " + name);        
+        die("could not find attribute: " + name);
     }
 }
 
@@ -50,6 +20,13 @@ const BORDER_COLOR = "#aaa";
 const WAVE_COLOR = "#000";
 const WAVE_WIDTH = 3; // pixels, the width of the wave line.
 const LEFT_MARGIN = 20; // margin for signal name on the left.
+
+// A waveform
+//
+// Use declarative definition in html
+//
+// <div ... name="Q" sig="L 10 H 20 L 20 X 10"  h="40" w="700"></div>
+//
 
 export class Waveform {
     // extends event harness, an event dispatcher
