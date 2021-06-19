@@ -19,6 +19,10 @@
           margin: 0 auto !important;
           float: none !important;              
       }
+
+      .waveform {
+          padding: 0 0 10px 0;
+      }
     </style>
 
   </head>
@@ -47,70 +51,76 @@
     <div id="wire2"></div>
 
     <p> Combinational devices use the static discipline to mitigate
-    noise. </p>
+      noise. </p>
 
     <p> Sequential devices use the <b>dynamic discipline</b> to
-    mitigate glitches around clock edges. </p>
+      mitigate glitches around clock edges. </p>
     
     <p> The plan is to use feedback with a lenient mux to build a
-    reliable D-latch. </p>
-    
+      reliable D-latch. </p>
     
     <p>
-      Here are the steps outlined in the sequential logic section of the
-      computation structures <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
+      Here are the steps outlined in the sequential logic section of
+      the computation structures
+      <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
     </p>
     
     <p><b>To reliably latch $1$ means that changes on $D$ will not affect the 
-    $Q$ output</b> </p>
+        $Q$ output</b></p>
 
+    <hr>
 
     <div id="mux-2"></div>
-    <div id="wave-id-step1" name="D" h="40" w="700"></div>
-    <div id="wave-id-step2" name="G" h="40" w="700"></div>
-    <div id="wave-id-step3" name="Q" h="40" w="700"></div>
 
+    <div type="wavegroup" class="wavegroup" name="wavegroup1">
+      <div id="wave-id-step1q" class="waveform" name="Q" h="40" w="700"></div>
+      <div id="wave-id-step1d" class="waveform" name="D" h="40" w="700"></div>
+      <div id="wave-id-step1g" class="waveform" name="G" h="40" w="700"></div>
+    </div>
     
-    <p> Apply $1$ to $D$, holding $G=1$ </p>
+    <center><p> Apply $1$ to $D$, holding $G=1$ </p></center>
+
+    <hr>
     
-    <p> After another $T_{PD}$, $Q’$ and $D$ both valid for $t_{PD}$;
-      will hold $Q=1$ independently of $G$ </p>
+    <p> After $D$ and $G$ have been valid for $t_{PD}$, the new value $1$
+      appears at the mux output $Q$ (and hence at the input $Q'$). </p>
     
     <p> Set $G=0$, while $Q’$ and $D$ hold $Q=D$ </p>
     
     <p> After $T_{PD}$, $1$ appears at $Q=Q’$ </p>
     
     <p> After another $t_{PD}$, $G=0$ and $Q’$ are sufficient to hold
-    $Q=1$ independently of $D$ </p>
+      $Q=1$ independently of $D$ </p>
 
-<hr>
-<h2>References</h2>
+    <hr>
+    <h2>References</h2>
+    
+    <p class="references">
+      [] <a href="https://computationstructures.org/notes">Computation Structures</a>  
+      <br> 
+      [] <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-004-computation-structures-spring-2017/c5/c5s2/c5s2v2/">OpenCourseWare, 6.004 (2017), Unit 5 Sequential Logic</a>
+      <br>  
+      [] <a href="https://web.archive.org/web/20210414193341/https://doe.carleton.ca/~shams/ELEC3500/hazards.pdf"> Glitches and Hazards in Digital Circuits</a>
+    </p>
+    
+    <!-- ----------------------------------------------------------------------------- -->
+    
+    <script>
+      MathJax = {
+          tex: {
+              inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+              fontCache: 'global'
+          }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
 
-<p>
-
-  [ ] <a href="https://computationstructures.org/notes">Computation Structures</a>  
-  <br>
-  [] <a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-004-computation-structures-spring-2017/c5/c5s2/c5s2v2/">OpenCourseWare, 6.004 (2017), Unit 5 Sequential Logic</a>
-  <br>
-  [] <a href="https://web.archive.org/web/20210414193341/https://doe.carleton.ca/~shams/ELEC3500/hazards.pdf"> Glitches and Hazards in Digital Circuits</a>
-</p>
-
-<script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  },
-  svg: {
-    fontCache: 'global'
-  }
-};
-</script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-</script>
-
-<script src="main.js"></script>    
-</body>  
+    <script src="main.js"></script>    
+  </body>  
 </html>
 
 
