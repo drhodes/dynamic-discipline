@@ -3,19 +3,22 @@
     "version": "1.0.0",
     "description": "a visualization of the dynamic discipline",
     "private": true,
+    "type": "module",
     "scripts": {
         "bundle": "make bundle",
-        "watch": "npm-watch"
+        "watch": "npm-watch",
+        "test": "mocha"
     },
     "author": "Derek Rhodes <physci@gmail.com> (https://sdf.org/~rhoder)",
     "license": "MIT",
     "devDependencies": {
-        "mocha": "~8.4.0",
+        "mocha": "^8.4.0",
         "webpack": "^5.38.1",
         "webpack-cli": "^4.7.2"
     },
     "dependencies": {
         "@svgdotjs/svg.js": "^3.0.16",
+        "esm": "^3.2.25",
         "lodash": "^4.17.21",
         "npm-watch": "^0.9.0"
     },
