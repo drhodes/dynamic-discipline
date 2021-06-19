@@ -2,6 +2,7 @@ import * as SVG from '@svgdotjs/svg.js';
 import {die, log} from './err.js';
 import {Poly} from './poly.js';
 import {Transition} from './transition.js';
+import {Sig} from './sig.js';
 import {L, H, X} from './transition.js';
 
 class Attributes {
@@ -32,22 +33,21 @@ export class Waveform {
     // extends event harness, an event dispatcher
     // for objects.???  think about it.
     
-    constructor(div, transitions, totalDuration, funcSpec) {
+    constructor(div, totalDuration, funcSpec) {
         // An interactive signal which is optionally associated with
         // circuit terminal.
         this.div = div;
 
-        // TODO consider a transition container class.
-        // TODO if transitions does not start at 0 then die.
         // TODO if transitions does not contain a transition at an instant
         // in time equal to the duration - that is - the last
         // transition happens at some point in the middle of the
 
-        this.transitions = transitions.map(t => new Transition(t[0], t[1]));
         
         this.duration = totalDuration; 
         this.funcSpec = funcSpec;
         this.attrs = new Attributes(div);
+        this.sig = new Sig(this.attrs.getAttr("sig"));
+        this.transitions = this.sig.transitions;
         
         this.heightPx = this.attrs.getAttr("h");
         this.widthPx = this.attrs.getAttr("w");
@@ -109,9 +109,9 @@ export class Waveform {
     }
 
     renderWave() {
-        var ts = this.transitions;
+        var ts = this.sig.transitions;
         const BOTTOM_BORDER = this.heightPx - WAVE_WIDTH/2; // hug the bottom border.
-        const TOP_BORDER = 0 + WAVE_WIDTH/2; // hug the top border.
+        const TOP_BORDER = 0 + WAVE_WIDTH/2;             // hug the top border.
         const RIGHT_BORDER = this.widthPx;
         
         let polyline;
@@ -125,31 +125,32 @@ export class Waveform {
             polyline.rt(RIGHT_BORDER);
             break;
             
-        case 1:
-            // if transitions is a list with only one transition then
-            // the value of that transition should be the value of the
-            // waveform for the entire duration.
-
-            var y = ts[0].value == H ? TOP_BORDER : BOTTOM_BORDER;
-            polyline = new Poly(this.ctx, LEFT_MARGIN, y);
-            polyline.rt(RIGHT_BORDER);            
-            break;
-            
         default:
-            // many transitions.
+            // One or many transitions.
             
             var curValue = ts[0].value;
-            var curX = LEFT_MARGIN;
-            
-            var y = curValue == H ? TOP_BORDER : BOTTOM_BORDER;
-            polyline = new Poly(this.ctx, LEFT_MARGIN, y);
+            var dx = this.pxFromTime(ts[0].t);
+            var curX = LEFT_MARGIN;            
+            var curY = curValue == H ? TOP_BORDER : BOTTOM_BORDER;
+
+            // start at the right logic value
+            polyline = new Poly(this.ctx, curX, curY);
+            polyline.rt(dx);
 
             ts.slice(1).map(trans => {
-                var nextX = this.pxFromTime(trans.t);               
-                y = trans.value == H ? TOP_BORDER : BOTTOM_BORDER;
-                polyline.toAbs(curX,y);
-                polyline.toAbs(nextX,y);
-                curX = nextX;
+                // only transition from hi to low or vice versa if the
+                // wave changes logic value.
+                if (curValue != trans.value) {
+                    if (curValue == L) {
+                        polyline.up(BOTTOM_BORDER - WAVE_WIDTH/2);
+                    } else {
+                        polyline.dn(BOTTOM_BORDER - WAVE_WIDTH/2);
+                    }
+                }
+                
+                var dx = this.pxFromTime(trans.t);
+                polyline.rt(dx);
+                curValue = trans.value;
             });
         }
         
