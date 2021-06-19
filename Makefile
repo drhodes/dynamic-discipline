@@ -4,8 +4,8 @@ bundle: ## webpack bundle
 watch:
 	npm run watch
 
-test: ## test
-	npm test
+test: FORCE ## test
+	npm test 
 
 clean: ## clean all the things
 	echo implement clean makefile rule
