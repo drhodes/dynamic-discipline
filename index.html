@@ -7,17 +7,23 @@
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Literata:wght@300&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@300&display=swap');
       
       p { font-size: 16pt;
+          font-family: 'Literata', serif; 
           max-width: 600px;
           margin: 0 auto !important;
           float: none !important;              
           padding: 0 0 15pt 0;
         }
+
       body {
+          /* font-family: 'Literata', serif; */
+          font-family: 'Saira Condensed', sans-serif;
           max-width: 700px;
           margin: 0 auto !important;
-          float: none !important;              
+          background-color: "#0F0";
+          float: none !important;
       }
 
       .waveform {
@@ -27,20 +33,10 @@
 
   </head>
   
-  <body bgcolor="#fefefe" style="font-family: 'Literata', serif;">   
-    <center>
-      <h1>Understanding the Dynamic Discipline</h1>
-      <h2>Adventures in Sequential Digital Logic</h2>
-    </center>
+  <body bgcolor="#BBB">
+      <h1>Understanding the Dynamic D1scipline</h1>
+      <h2>An Adventure in Sequential Digital Logic</h2>
     <hr>
-    <div group="wavegroup1">
-      <div id="wave-id1" name="D" h="50" w="700"></div>
-      <div id="wave-id2" name="Q" h="50" w="700"></div>
-    </div>
-    
-    <hr>
-    
-    <div id="wirex"></div>
     
     <br><br>
     <p>Some wires have a little noise,</p>
@@ -69,22 +65,14 @@
 
     <hr>
 
-    <h1> A MUX WARM UP </h1>
+    <center><h1> A MUX WARM UP </h1></center>
 
-    <p>
-      One thing to keep in mind is that something seomthing.
-    </p>
-
+    <div id="mux-2" select="G" input-0="Q'" input-1="D" output="Q"></div>
     
-    <div id="mux-2"></div>
-
-    <div type="wavegroup" class="wavegroup" name="wavegroup1" duration="50" h="40" w="700">
-      <div id="wave-id-step1q" class="waveform" name="Q"
-           sig="L 10 H 10 L 10 H 10 L 10"  h="40" w="700"></div>
-      <div id="wave-id-step1d" class="waveform" name="D"
-           sig="H 10" h="40" w="700"></div>
-      <div id="wave-id-step1g" class="waveform" name="G"
-           sig="H 10" h="40" w="700"></div>
+    <div id="wavegroup1" type="wavegroup" class="wavegroup" name="wavegroup1" h="60" w="700" duration="40">
+      <div class="waveform foo" name="Q" sig="H 10" ></div>
+      <div class="waveform" name="D" sig="H 10"></div>
+      <div class="waveform" name="G" sig="L 10 H 10 L 10 H 10"></div>
     </div>
     
     <center><p> Apply $1$ to $D$, holding $G=1$ </p></center>

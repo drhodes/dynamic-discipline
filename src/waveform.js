@@ -4,23 +4,14 @@ import {Poly} from './poly.js';
 import {Transition} from './transition.js';
 import {Sig} from './sig.js';
 import {L, H, X} from './transition.js';
-
-class Attributes {
-    constructor(div) {
-        this.div = div;
-    }
-    getAttr(name) {
-        let val = this.div.getAttribute(name);
-        if (val) return val;
-        die("could not find attribute: " + name);
-    }
-}
+import * as util from './util.js';
+import {Attributes} from './attrs.js';
 
 const BACKGROUND_COLOR = "#d6f7ff";
 const BORDER_COLOR = "#aaa";
 const WAVE_COLOR = "#000";
 const WAVE_WIDTH = 3; // pixels, the width of the wave line.
-const LEFT_MARGIN = 20; // margin for signal name on the left.
+const LEFT_MARGIN = 40; // margin for signal name on the left.
 
 // A waveform
 //
@@ -33,29 +24,27 @@ export class Waveform {
     // extends event harness, an event dispatcher
     // for objects.???  think about it.
     
-    constructor(div, totalDuration, funcSpec) {
+    constructor(div, funcSpec) {
         // An interactive signal which is optionally associated with
         // circuit terminal.
         this.div = div;
-
+        this.attrs = new Attributes(div);
+        
         // TODO if transitions does not contain a transition at an instant
         // in time equal to the duration - that is - the last
         // transition happens at some point in the middle of the
-
         
-        this.duration = totalDuration; 
+        this.duration = util.durationFromString(this.attrs.get("duration"));
         this.funcSpec = funcSpec;
-        this.attrs = new Attributes(div);
-        this.sig = new Sig(this.attrs.getAttr("sig"));
+        this.sig = new Sig(this.attrs.get("sig"));
         this.transitions = this.sig.transitions;
         
-        this.heightPx = this.attrs.getAttr("h");
-        this.widthPx = this.attrs.getAttr("w");
-        this.name  = this.attrs.getAttr("name");
-        
-        var elementId = "#" + this.attrs.getAttr("id");
-        this.ctx = SVG.SVG().addTo(elementId).size(this.widthPx, this.heightPx);
-        this.render();        
+        this.heightPx = this.attrs.get("h");
+        this.widthPx = this.attrs.get("w");
+        this.name  = this.attrs.get("name");
+
+        this.ctx = SVG.SVG().addTo(div).size(this.widthPx, this.heightPx);
+        this.render();
     }
 
     pxFromTime(ns) {
