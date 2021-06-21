@@ -26,6 +26,22 @@ export class Sig {
             this.transitions.push(new Transition(duration, value));
         });
     }
+
+    // This should probably be a look up table
+    // precomputed when the sig is initialized.  In fact, the sig should handle this
+    valueAtTime(t) {
+        let curTime = 0;
+        let result = {ok:false, val:-1};
+        this.transitions.every(trans => {
+            if (t >= curTime && t < curTime + trans.t) {
+                result = {ok: true, val: trans.value};
+                return false; // break 
+            }
+            curTime += trans.t;
+            return true; // continue
+        });
+        return result;
+    }
 }
 
 
