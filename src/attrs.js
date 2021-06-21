@@ -6,10 +6,14 @@ export class Attributes {
     }
     get(name) {
         let val = this.div.getAttribute(name);        
-        if (!val) die("could not find attribute: " + name);
+        if (val == null) die("could not find attribute: " + name);
         return val;
     }
 
+    hasAttr(name) {
+        return this.div.hasAttribute(name);
+    }
+    
     getAsNum(name) {
         let numString = this.get(name);
         let num = Number.parseFloat(numString);
