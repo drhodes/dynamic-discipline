@@ -24,37 +24,66 @@ export class Waveform {
     // extends event harness, an event dispatcher
     // for objects.???  think about it.
     
-    constructor(div, funcSpec) {
+    constructor(div, parent, w, h, duration) {
         // An interactive signal which is optionally associated with
         // circuit terminal.
+        this.parent = parent;
         this.div = div;
         this.attrs = new Attributes(div);
+        this.duration = duration;
+
+        this.currentTime = 0;
         
         // TODO if transitions does not contain a transition at an instant
         // in time equal to the duration - that is - the last
         // transition happens at some point in the middle of the
         
-        this.duration = util.durationFromString(this.attrs.get("duration"));
-        this.funcSpec = funcSpec;
         this.sig = new Sig(this.attrs.get("sig"));
         this.transitions = this.sig.transitions;
         
-        this.heightPx = this.attrs.get("h");
-        this.widthPx = this.attrs.get("w");
+        this.heightPx = h;
+        this.widthPx = w;
         this.name  = this.attrs.get("name");
 
         this.ctx = SVG.SVG().addTo(div).size(this.widthPx, this.heightPx);
         this.render();
     }
+    
+    registerEvents() {
+        // OK. before abstracting this out what, what does it need to do?
 
+        // Need a timeline to show the current time.  need to fetch
+        // values (quickly) from the waveform, given a time, what is
+        // the value?
+        
+    }
+
+    updateTimeLine(x) {
+        this.timeline.move(x, 0);
+        this.currentTime = this.timeFromPx(x);
+    }
+
+    getCurrentTime() {
+        return this.currentTime;
+    }
+    
     pxFromTime(ns) {
         // Find the x coordinate pixel associated with a time.  This
         // is a linear relationship, where the pixel width of the
         // waveform and the total duration of the waveform measure the
         // same screen distance
         
-        let m = this.widthPx/this.duration;
+        let m = (this.widthPx - LEFT_MARGIN)/this.duration;
         return m * ns; // :: (pixels/time) * time = pixels
+    }
+
+    timeFromPx(x) {
+        // Find the time associated with the x-coordinate.  This
+        // is a linear relationship, where the pixel width of the
+        // waveform and the total duration of the waveform measure the
+        // same screen distance
+        let m = (this.widthPx - LEFT_MARGIN)/this.duration;
+        return (1/m) * x;        
     }
     
     // allocate mutable SVG elements
@@ -82,6 +111,7 @@ export class Waveform {
 
         this.renderName();
         this.renderWave();
+        this.renderTimeLine();
     }
 
     renderName() {
@@ -93,16 +123,30 @@ export class Waveform {
             .fill("black")
             .font({family: 'Courier'})
             .move(TEXT_X, TEXT_Y);
-
-        
     }
 
+    renderTimeLine() {
+        this.timeline = this.ctx
+            .line(LEFT_MARGIN, 0, LEFT_MARGIN, this.heightPx)
+            .stroke({ width: TIMELINE_WIDTH, color:TIMELINE_COLOR });
+ 
+        this.ctx.on('mousemove', ev => {
+            if (ev.layerX > LEFT_MARGIN && ev.layerX < this.widthPx) {
+                this.parent.updateTimeLine(ev.layerX);
+            }
+            // need to push this event onto a queue, shared with the
+            // parent group.
+        });
+        
+    }
+    
     renderWave() {
-        var ts = this.sig.transitions;
         const BOTTOM_BORDER = this.heightPx - WAVE_WIDTH/2; // hug the bottom border.
         const TOP_BORDER = 0 + WAVE_WIDTH/2;             // hug the top border.
         const RIGHT_BORDER = this.widthPx;
-        
+        const RISEFALL_DISTANCE = this.heightPx - WAVE_WIDTH;
+
+        var ts = this.sig.transitions;
         let polyline;
        
         switch (ts.length) {
