@@ -2,21 +2,6 @@ import * as SVG from '@svgdotjs/svg.js';
 import {die, log} from './err.js';
 import {Wire} from './wire.js';
 
-// class Dir {
-//     constructor(dir) {
-//         this.direction = dir
-//     }
-//     eq(dir) { return this.direction == dir.direction; }
-// }
-
-// class N extends Dir {
-//     constructor() {
-//         super(Dir, N);        
-//     }
-// }
-
-// class TermDir
-
 export class Term {
     constructor(ctx, scale, name, x, y) {
         const S = this.scale = scale;
