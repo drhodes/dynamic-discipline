@@ -67,18 +67,26 @@
 
     <center><h1> A MUX WARM UP </h1></center>
 
-    <div id="mux-2" select="G" input-0="Q'" input-1="D" output="Q"></div>
     
-    <div id="wavegroup1" type="wavegroup" class="wavegroup" name="wavegroup1" h="60" w="700" duration="40">
-      <div class="waveform foo" name="Q" sig="H 10" ></div>
-      <div class="waveform" name="D" sig="H 10"></div>
-      <div class="waveform" name="G" sig="L 10 H 10 L 10 H 10"></div>
+    <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>
+    
+    <p> Control the mux by sampling the waveforms with your pointer </p>
+    
+    <div id="wavegroup1" type="wavegroup" class="wavegroup" name="wavegroup1" h="50" w="700" duration="40">
+      <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" ></div>
+      <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10"></div>
+      <div class="waveform" name="D1" sig="H 20 L 20"></div>
+      <div class="waveform" name="S"  sig="L 5 H 5 L 5 H 5 L 5 H 5 L 5 H 5 "></div>
+      <div class="timeline"></div>
     </div>
+
+
     
+    <hr>
+
     <center><p> Apply $1$ to $D$, holding $G=1$ </p></center>
 
-    <hr>
-    
+
     <p> After $D$ and $G$ have been valid for $t_{PD}$, the new value $1$
       appears at the mux output $Q$ (and hence at the input $Q'$). </p>
     
