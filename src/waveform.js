@@ -7,11 +7,14 @@ import {L, H, X} from './transition.js';
 import * as util from './util.js';
 import {Attributes} from './attrs.js';
 
-const BACKGROUND_COLOR = "#d6f7ff";
+const BACKGROUND_COLOR = "#efefef";
 const BORDER_COLOR = "#aaa";
 const WAVE_COLOR = "#000";
 const WAVE_WIDTH = 3; // pixels, the width of the wave line.
 const LEFT_MARGIN = 40; // margin for signal name on the left.
+
+const TIMELINE_WIDTH = 3;
+const TIMELINE_COLOR = "#0F0";
 
 // A waveform
 //
@@ -170,14 +173,14 @@ export class Waveform {
             polyline = new Poly(this.ctx, curX, curY);
             polyline.rt(dx);
 
-            ts.slice(1).map(trans => {
+            ts.slice(1).forEach(trans => {
                 // only transition from hi to low or vice versa if the
                 // wave changes logic value.
                 if (curValue != trans.value) {
                     if (curValue == L) {
-                        polyline.up(BOTTOM_BORDER - WAVE_WIDTH/2);
+                        polyline.up(RISEFALL_DISTANCE);
                     } else {
-                        polyline.dn(BOTTOM_BORDER - WAVE_WIDTH/2);
+                        polyline.dn(RISEFALL_DISTANCE);
                     }
                 }
                 
