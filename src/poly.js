@@ -7,7 +7,6 @@ export class Poly {
         this.y = y;
         this.segments = [x, y];
         this.dashoffset = 0;
-        this._dashspeed = .1;
         this.polyline = null; // make sure to throw error if this is
                               // attempted to be drawn without proper
                               // initialization.
@@ -24,11 +23,6 @@ export class Poly {
 
     rotate(deg) {
         this.polyline.transform({rotate: deg});
-    }
-    
-    dashspeed(n) {
-        this._dashspeed = n;
-        return this;
     }
     
     subdivideSegmentsOnce() {
@@ -115,7 +109,7 @@ export class Poly {
 
     // rename this function: stepDashAnimation
     update() {
-        this.dashoffset -= .2;
+        this.dashoffset -= .05;
         this.polyline.stroke({ dashoffset: this.dashoffset});
     }
 }
