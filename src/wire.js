@@ -10,6 +10,12 @@ export class Wire {
         this._rotation = 0;
         this._noiseAmplitude = .1;
     }
+    
+    move(x, y) {
+        this.line.move(x, y);
+        return this;
+    }
+    
     up(px) { this.line.up(px); return this; }
     dn(px) { this.line.dn(px); return this; }
     lt(px) { this.line.lt(px); return this; }

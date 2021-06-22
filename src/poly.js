@@ -23,6 +23,11 @@ export class Poly {
         console.log(this.polyline._array);
         return this.polyline._array;
     }
+    
+    move(x, y) {
+        this.polyline.move(x,y);
+    }
+    
     remove() { this.polyline.remove(); }
 
     rotate(deg) {
