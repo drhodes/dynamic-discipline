@@ -29,6 +29,11 @@ export class Term {
     rotate(deg) {
         this.wire.rotate(deg);
     }
+
+    flashLabel() {
+        
+    }
+    
     getPoints() {        
         return this.wire.getPoints();
     }
