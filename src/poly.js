@@ -19,6 +19,10 @@ export class Poly {
         return p;
     }
 
+    getPoints() {
+        console.log(this.polyline._array);
+        return this.polyline._array;
+    }
     remove() { this.polyline.remove(); }
 
     rotate(deg) {

@@ -15,6 +15,11 @@ export class Wire {
     lt(px) { this.line.lt(px); return this; }
     rt(px) { this.line.rt(px); return this; }
 
+    getPoints() {
+        // get the polyline points.
+        return this.line.getPoints();
+    }
+    
     check_init() {
         // is this wire initialized?
         // this is awful.

@@ -29,6 +29,9 @@ export class Term {
     rotate(deg) {
         this.wire.rotate(deg);
     }
+    getPoints() {        
+        return this.wire.getPoints();
+    }
 }
 
 class WireState {

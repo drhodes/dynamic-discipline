@@ -61,4 +61,19 @@ export class Mux2 {
         // allow users adjust terminal label positions.
         this.terminals[termName].nudgeLabel(dx, dy);
     }
+
+    getConnectionPx(termName) {
+        // get the absolute pixel position of a terminal give a
+        // terminal name
+        let term = this.terminals[termName];
+        let ps = term.getPoints();
+        if (term) {
+            if (termName == "out") {
+                return ps[1];
+            }
+        } else {
+            die("Could not find terminal: " + termName);
+        }
+        
+    }
 }
