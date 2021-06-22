@@ -60,17 +60,17 @@ export class Wire {
             // a class that maintains state, the segment points of the
             // original line.
             
-            this.noise = this.line
-                .clone()
-                .subdivide(3)
-                .width(1)
-                .randomize(10)
-                .done()
-                .color("#777")
-                .width(1);
-            // design is starting to come unhinged.
-            // noise should be a class that composes Wire.
-            this.noise.rotate(this._rotation);
+            // this.noise = this.line
+            //     .clone()
+            //     .subdivide(3)
+            //     .width(1)
+            //     .randomize(10)
+            //     .done()
+            //     .color("#777")
+            //     .width(1);
+            // // design is starting to come unhinged.
+            // // noise should be a class that composes Wire.
+            // this.noise.rotate(this._rotation);
         };
         
         window.requestAnimationFrame(_=> {
