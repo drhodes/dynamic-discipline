@@ -34,7 +34,7 @@
 
       .wavegroup {
           background-color: #FFF;
-          padding: 40px 0 40px 0;
+          padding: 0px 0 40px 0;
           
       }
       .spacer100 { padding : 100px 0 0 0; }
@@ -76,10 +76,11 @@
 
     <center><h1> A MUX WARM UP </h1></center>
 
+    <div id="schem1" class="schem" h="300" w="700">
+      <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>      
+    </div>
     
-    <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>
-    
-    <div id="wavegroup1" type="wavegroup" class="wavegroup" name="wavegroup1" h="40" w="700" duration="40">
+    <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="40" w="700" duration="40">
       <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" ></div>
       <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10"></div>
       <div class="waveform" name="D1" sig="H 20 L 20"></div>
