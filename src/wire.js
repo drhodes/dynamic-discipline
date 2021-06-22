@@ -38,6 +38,7 @@ export class Wire {
     rotate(deg) {
         this._rotation = deg;
         this.line.rotate(deg);
+        this.noise.rotate(deg);
     }
     
     dashed() {
@@ -55,17 +56,25 @@ export class Wire {
         
         let f = _=> {
             this.line.update();
+            // this allocates every frame, it is slow.  noise could be
+            // a class that maintains state, the segment points of the
+            // original line.
+            
             this.noise = this.line
                 .clone()
                 .subdivide(3)
                 .width(1)
                 .randomize(10)
-                .done().color("#777").width(1);
-            // this is starting to come unhinged.
+                .done()
+                .color("#777")
+                .width(1);
+            // design is starting to come unhinged.
+            // noise should be a class that composes Wire.
             this.noise.rotate(this._rotation);
         };
         
         window.requestAnimationFrame(_=> {
+            // this call to remove can go away once Noise is its own class.
             this.noise.remove();
             f();
             this.animate();
