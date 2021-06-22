@@ -9,7 +9,7 @@ import {Attributes} from './attrs.js';
 
 const BACKGROUND_COLOR = "#efefef";
 const BORDER_COLOR = "#aaa";
-const WAVE_COLOR = "#000";
+const WAVE_COLOR = "#555";
 const WAVE_WIDTH = 3; // pixels, the width of the wave line.
 const LEFT_MARGIN = 40; // margin for signal name on the left.
 
@@ -191,6 +191,6 @@ export class Waveform {
         }
         
         // TODO need to refactor polyline to remove the requirement to call .done() 
-        polyline.done().color("black").width(WAVE_WIDTH);
+        polyline.done().color(WAVE_COLOR).width(WAVE_WIDTH);
     }
 }
