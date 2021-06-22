@@ -28,7 +28,8 @@ export class Mux2 {
             .dn(2.5*S)
             .to(-S, S*.75)
             .up(4*S)
-            .done();
+            .done()
+            .width(3);
 
         // 
         const SIDE_NUDGE = S*.35;
