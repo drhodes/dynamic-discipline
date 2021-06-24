@@ -8,6 +8,7 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Literata:wght@300&display=swap');
       @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@300&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
       
       p { font-size: 16pt;
           font-family: 'Literata', serif; 
@@ -26,7 +27,7 @@
           float: none !important;
       }
 
-      .waveform {
+      .waveform {    
           padding: 0 0 10px 0;
           cursor:cell;
           user-select: none;
@@ -34,9 +35,16 @@
 
       .wavegroup {
           background-color: #FFF;
-          padding: 0px 0 40px 0;
-          
+          padding: 0px 0 40px 0;          
       }
+      
+      .bench-title {
+          font-size: 80px;
+          font-weight: bold;
+      }
+
+      .bench { }
+      
       .spacer100 { padding : 100px 0 0 0; }
       
     </style>
@@ -46,7 +54,6 @@
   <body bgcolor="#BBB">
     <h1>WORK IN PROGRESS</h1>
     <h1>Understanding the Dynamic D1scipline</h1>
-    <h2>An Adventure in Sequential Digital Logic</h2>
     <hr>
     
     <br><br>
@@ -56,14 +63,9 @@
     <p>Some wires have a lot!</p>
     <div id="wire2"></div>
 
-    <p> Combinational devices use the static discipline to mitigate
-      noise. </p>
-
-    <p> Sequential devices use the <b>dynamic discipline</b> to
-      mitigate glitches around clock edges. </p>
-    
-    <p> The plan is to use feedback with a lenient mux to build a
-      reliable D-latch. </p>
+    <p> Combinational devices use the static discipline to mitigate noise. </p>
+    <p> Sequential devices use the <b>dynamic discipline</b> to mitigate glitches around clock edges. </p>
+    <p> The plan is to use feedback with a lenient mux to build a reliable D-latch. </p>
     
     <p>
       Here are the steps outlined in the sequential logic section of
@@ -71,46 +73,34 @@
       <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
     </p>
     
-
     <hr>
-
-    <center><h1> A MUX WARM UP </h1></center>
-
-    <div id="schem1" class="schem" h="300" w="700">
-      <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>      
+    <center><div class="bench-title"> A MUX WARM UP </div></center>
+    <div id="bench1" class="bench">
+      <div id="schem1" class="schem" h="300" w="700">
+        <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>      
+      </div>
+      <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="40" w="700" duration="40">
+        <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" ></div>
+        <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10"></div>
+        <div class="waveform" name="D1" sig="H 20 L 20"></div>
+        <div class="waveform" name="S"  sig="L 5 H 5 L 5 H 5 L 5 H 5 L 5 H 5 "></div>
+        <div class="timeline"></div>
+      </div>
     </div>
     
-    <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="40" w="700" duration="40">
-      <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" ></div>
-      <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10"></div>
-      <div class="waveform" name="D1" sig="H 20 L 20"></div>
-      <div class="waveform" name="S"  sig="L 5 H 5 L 5 H 5 L 5 H 5 L 5 H 5 "></div>
-      <div class="timeline"></div>
-    </div>
-
     <p> Control the mux by sampling the waveforms with your pointer </p>
-    
     <div class="spacer100"></div>    
     <hr>
-    
-
     
     <p><b>To reliably latch $1$ means that changes on $D$ will not affect the 
         $Q$ output</b></p>
 
     <center><p> Apply $1$ to $D$, holding $G=1$ </p></center>
-
-
     <p> After $D$ and $G$ have been valid for $t_{PD}$, the new value $1$
       appears at the mux output $Q$ (and hence at the input $Q'$). </p>
-    
     <p> Set $G=0$, while $Q’$ and $D$ hold $Q=D$ </p>
-    
     <p> After $T_{PD}$, $1$ appears at $Q=Q’$ </p>
-    
-    <p> After another $t_{PD}$, $G=0$ and $Q’$ are sufficient to hold
-      $Q=1$ independently of $D$ </p>
-
+    <p> After another $t_{PD}$, $G=0$ and $Q’$ are sufficient to hold $Q=1$ independently of $D$ </p>
     <hr>
     <h2>References</h2>
     

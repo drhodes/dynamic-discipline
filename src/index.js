@@ -4,19 +4,24 @@ import {Waveform} from './waveform.js';
 import {WaveGroup} from './wavegroup.js';
 import {Mux2} from './mux2.js';
 import {Schematic} from './schem.js';
+import {LabBench} from './labbench.js';
 
 // let mux2 = new Mux2(document.getElementById("mux-2"),  30);
 
 
 function aMuxWarmUp() {
-    let schem = new Schematic(document.getElementById("schem1"));
+    let div = document.getElementById("bench1")
+    console.log(div);
+    let bench = new LabBench(div);
+    
+    let schem = bench.schematic; //new Schematic(document.getElementById("schem1"));
     let mux2 = schem.addMux("mux-2", 350, 50);
-    mux2.nudgeLabel("out", 1.3, -.27);
-    mux2.nudgeLabel("in0", -1.5, -.27);
-    mux2.nudgeLabel("in1", -1.5, -.27);
-    mux2.nudgeLabel("sel", 0, .7);
+    mux2.nudgeLabel("out", 1.3, -.37);
+    mux2.nudgeLabel("in0", -1.8, -.37);
+    mux2.nudgeLabel("in1", -1.8, -.37);
+    mux2.nudgeLabel("sel", -.1, .7);
 
-    new WaveGroup(document.getElementById("wavegroup1"));
+    //new WaveGroup(document.getElementById("wavegroup1"));
 }
 aMuxWarmUp();
 
