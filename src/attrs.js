@@ -24,4 +24,9 @@ export class Attributes {
     set(name, val) {
         this.div.setAttribute(name, val);        
     }
+
+    hasClass(name) {
+        return this.div.classList.contains(name);
+    }
+    
 }
