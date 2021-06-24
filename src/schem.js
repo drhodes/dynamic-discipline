@@ -27,7 +27,6 @@ export class Schematic {
     }
     
     addMux(name, x, y) {
-        //let mux = new Mux2(document.getElementById("mux-2"), 30);
         let mux = new Mux2(this.ctx, document.getElementById(name), 30, x, y);
         this.addDevice(name, mux);
         return mux;
@@ -43,5 +42,10 @@ export class Schematic {
     deviceExistsP(name) {
         return this.devices[name] != null;
     }
-    
+
+    update(sigmap) {
+        for (let device of Object.values(this.devices)) {
+            device.update(sigmap);
+        }
+    }    
 }

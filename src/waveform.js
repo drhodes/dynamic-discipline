@@ -1,10 +1,10 @@
 import * as SVG from '@svgdotjs/svg.js';
+import * as util from './util.js';
 import {die, log} from './err.js';
 import {Poly} from './poly.js';
 import {Transition} from './transition.js';
 import {Sig} from './sig.js';
 import {L, H, X} from './transition.js';
-import * as util from './util.js';
 import {Attributes} from './attrs.js';
 
 const BACKGROUND_COLOR = "#efefef";
@@ -14,7 +14,7 @@ const WAVE_WIDTH = 3; // pixels, the width of the wave line.
 const LEFT_MARGIN = 40; // margin for signal name on the left.
 
 const TIMELINE_WIDTH = 3;
-const TIMELINE_COLOR = "#0F0";
+const TIMELINE_COLOR = "#00FF00AA";
 
 // A waveform
 //
@@ -50,16 +50,16 @@ export class Waveform {
 
         this.ctx = SVG.SVG().addTo(div).size(this.widthPx, this.heightPx);
         this.render();
+        this.registerEvents();
     }
     
-    registerEvents() {
-        // OK. before abstracting this out what, what does it need to do?
+    // registerEvents() {
+    //     // OK. before abstracting this out what, what does it need to do?
 
-        // Need a timeline to show the current time.  need to fetch
-        // values (quickly) from the waveform, given a time, what is
-        // the value?
-        
-    }
+    //     // Need a timeline to show the current time.  need to fetch
+    //     // values (quickly) from the waveform, given a time, what is
+    //     // the value?        
+    // }
 
     updateTimeLine(x) {
         this.timeline.move(x, 0);
@@ -86,7 +86,8 @@ export class Waveform {
         // waveform and the total duration of the waveform measure the
         // same screen distance
         let m = (this.widthPx - LEFT_MARGIN)/this.duration;
-        return (1/m) * x;        
+        let t = (1/m) * (x - LEFT_MARGIN);
+        return t;
     }
     
     // allocate mutable SVG elements
@@ -99,18 +100,17 @@ export class Waveform {
             .move(LEFT_MARGIN, 0);
         
         var topLine = this.ctx.line(LEFT_MARGIN, 0, this.widthPx, 0)
-            .stroke({ width: 2, color:BORDER_COLOR });
+            .stroke({ width: 1, color:BORDER_COLOR });
         var bottomLine = this.ctx.line(LEFT_MARGIN, this.heightPx, this.widthPx, this.heightPx)
-            .stroke({ width: 2, color:BORDER_COLOR });
+            .stroke({ width: 1, color:BORDER_COLOR });
 
-        const BAND_OFFSET = 10;
-        // funcspec lines
+        const BAND_OFFSET = 5; // TODO determine by functional spec
         var lineVOL = this.ctx
             .line(LEFT_MARGIN, BAND_OFFSET, this.widthPx, BAND_OFFSET)
-            .stroke({ width: .5, color:BORDER_COLOR });
+            .stroke({ width: .25, color:BORDER_COLOR });
         var lineVOH = this.ctx
             .line(LEFT_MARGIN, this.heightPx - BAND_OFFSET, this.widthPx, this.heightPx - BAND_OFFSET)
-            .stroke({ width: .5, color:BORDER_COLOR });
+            .stroke({ width: .25, color:BORDER_COLOR });
 
         this.renderName();
         this.renderWave();
@@ -119,7 +119,7 @@ export class Waveform {
 
     renderName() {
         // put the signal label in the left margin, centered vertically.
-        const TEXT_Y = this.heightPx / 2 - 8;
+        const TEXT_Y = this.heightPx / 2 - 12;
         const TEXT_X = 0;
         
         this.ctx.text(this.name)
@@ -132,15 +132,31 @@ export class Waveform {
         this.timeline = this.ctx
             .line(LEFT_MARGIN, 0, LEFT_MARGIN, this.heightPx)
             .stroke({ width: TIMELINE_WIDTH, color:TIMELINE_COLOR });
- 
+    }
+
+    registerEvents() {
         this.ctx.on('mousemove', ev => {
             if (ev.layerX > LEFT_MARGIN && ev.layerX < this.widthPx) {
-                this.parent.updateTimeLine(ev.layerX);
+                // TODO DEBUG FIREFOX try logging ev.layerX to see if
+                // it reports the same value that chrome does.
+                this.curX = ev.layerX;
+                this.parent.updateTimeLines(ev.layerX);
+                this.parent.updateBench();
             }
-            // need to push this event onto a queue, shared with the
-            // parent group.
         });
+
+        // need to tell parent to tell parent to 
         
+        // this.ctx.on('mousedown', ev => {
+        //     if (ev.layerX > LEFT_MARGIN && ev.layerX < this.widthPx) {
+        //         this.parent.updateTimeLine(ev.layerX);
+        //     }
+        // });
+        
+    }
+
+    getCurValue() {
+        return this.sig.valueAtTime(this.currentTime);
     }
     
     renderWave() {

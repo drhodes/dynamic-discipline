@@ -3,12 +3,12 @@ import {die, log} from './err.js';
 import {Attributes} from './attrs.js';
 import {Waveform} from './waveform.js';
 
-
 // need to add a time ruler.
 
 export class WaveGroup {
-    constructor(div) {
+    constructor(div, parent) {
         this.div = div;
+        this.parent = parent;
         let attrs = new Attributes(div);
         let w = attrs.getAsNum("w");
         let h = attrs.getAsNum("h");
@@ -36,9 +36,24 @@ export class WaveGroup {
 
     }
     
-    updateTimeLine(x) {
+    updateTimeLines(x) {
         this.waveforms.forEach( wf => {
             wf.updateTimeLine(x);
         });
+    }
+
+    updateBench() {
+        //
+        // two-way data binding. :/
+        //
+        this.parent.update(this);
+    }
+
+    getSignalMap() {
+        let sigmap = {};
+        this.waveforms.forEach(wf => {
+            sigmap[wf.name] = wf.getCurValue();
+        });        
+        return sigmap;
     }
 }

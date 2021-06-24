@@ -7,7 +7,6 @@ import {Waveform} from './waveform.js';
 import {Attributes} from './attrs.js';
 import {L, H, X} from './sig.js';
 
-
 export class Mux2 {
     constructor(ctx, div, scale, x, y) {
         log("inits Mux2");
@@ -28,7 +27,7 @@ export class Mux2 {
             .width(3);
 
         // 
-        const SIDE_NUDGE = S*.34;
+        const SIDE_NUDGE = S*.3;
         const VERT_NUDGE_ZERO = S*.7;
         ctx.text("0")
             .fill("blue")
@@ -63,6 +62,7 @@ export class Mux2 {
         this.terminals[termName].nudgeLabel(dx, dy);
     }
 
+    // this should be a method an interface called Device.
     getConnectionPx(termName) {
         // get the absolute pixel position of a terminal give a
         // terminal name
@@ -72,9 +72,18 @@ export class Mux2 {
             if (termName == "out") {
                 return ps[1];
             }
+            die("need to handle other terminal names");
         } else {
             die("Could not find terminal: " + termName);
         }
-        
+    }
+
+    update(sigmap) {        
+        for (let term of Object.values(this.terminals)) {            
+            let val = sigmap[term.name];
+            if (val && val.ok) {
+                term.updateValue(val.val);
+            }
+        }
     }
 }
