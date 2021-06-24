@@ -16,11 +16,10 @@ export class Term {
 
         this.text = ctx.text(".")
             .fill("blue")
-            .font({family: 'Courier'})
+            .font({family: 'Share Tech Mono', size: 22 })
             .move(x,y);
         
         this.updateValue(this.value);
-
     }
 
     nudgeLabel(dx, dy) {

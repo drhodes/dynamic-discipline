@@ -32,14 +32,14 @@ export class Mux2 {
         const VERT_NUDGE_ZERO = S*.7;
         ctx.text("0")
             .fill("blue")
-            .font({family: 'Courier'})
+            .font({family: 'Share Tech Mono', size:18})
             .move(o.left + SIDE_NUDGE,
                   o.top + VERT_NUDGE_ZERO);
         
         const VERT_NUDGE_ONE = S*2.7;
         ctx.text("1")
             .fill("blue")
-            .font({family: 'Courier'})
+            .font({family: 'Share Tech Mono', size:18})
             .move(o.left + SIDE_NUDGE, o.top + VERT_NUDGE_ONE);
 
         // allocate terminals.
@@ -50,10 +50,11 @@ export class Mux2 {
             out: new Term(ctx, S, attrs.get("out"), o.left+(1*S), o.top+(2*S)),
         };
         
-        this.terminals["sel"].rotate(-90);        
+        this.terminals["sel"].rotate(-90);
+        // don't edit these.
         this.nudgeLabel("out", .1 , .1);
-        this.nudgeLabel("in1", -.55, .1);
-        this.nudgeLabel("in0", -.55, .1);
+        this.nudgeLabel("in0", -.95, .1);
+        this.nudgeLabel("in1", -.95, 0);
         this.nudgeLabel("sel", 0, .45);
     }
 

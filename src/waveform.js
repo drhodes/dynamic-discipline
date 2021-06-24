@@ -124,7 +124,7 @@ export class Waveform {
         
         this.ctx.text(this.name)
             .fill("black")
-            .font({family: 'Courier'})
+            .font({family: 'Share Tech Mono', size: 22 })
             .move(TEXT_X, TEXT_Y);
     }
 
