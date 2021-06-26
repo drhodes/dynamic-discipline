@@ -2,6 +2,7 @@ import * as SVG from '@svgdotjs/svg.js';
 import {die, log} from './err.js';
 import {Poly} from './poly.js';
 import {Mux2} from './mux2.js';
+import {And2} from './and2.js';
 import {Wire} from './wire.js';
 import {Attributes} from './attrs.js';
 
@@ -32,6 +33,12 @@ export class Schematic {
         return mux;
     }
 
+    addAnd2(divName, x, y) {
+        let and2 = new And2(this.ctx, document.getElementById(divName), 30, x, y);
+        this.addDevice(divName, and2);
+        return and2;
+    }
+    
     addWire(name, x, y) {
         let wire = new Wire(this.ctx, x, y);
         wire.done();

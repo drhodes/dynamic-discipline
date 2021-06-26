@@ -22,6 +22,15 @@ function aMuxWarmUp() {
 aMuxWarmUp();
 
 
+function slideATransition() {
+    let div = document.getElementById("bench2");
+    console.log(div);
+    let bench = new LabBench(div);    
+    let schem = bench.schematic;
+    let and2 = schem.addAnd2("and2-slide", 350, 50);
+}
+slideATransition();
+
 function BuildFeedback1() {
     // this works, but the wires are a bit tedius, a better way?
     let schem = new Schematic(document.getElementById("schem1"));
