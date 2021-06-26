@@ -48,6 +48,9 @@
       .bench {}
       
       .spacer100 { padding : 100px 0 0 0; }
+      .spacer200 { padding : 200px 0 0 0; }
+      .lightline { border-top-color : #000 }
+
       
     </style>
 
@@ -90,23 +93,24 @@
     </div>
     
     <p> Control the mux by sampling the waveforms with your pointer </p>
-    <div class="spacer100"></div>    
-    <hr>
-
+    <div class="spacer200 lightline"></div>    
 
     <center><div class="bench-title"> SLIDE A TRANSITION </div></center>
     <div id="bench2" class="bench">
       <div id="schem1" class="schem" h="250" w="700">
-        <div id="and2-slide" type="and2" in1="A" in2="B" out="C"></div>
+        <div id="and2-slide" class="and2" in0="A" in1="B" out="C"></div>
       </div>
-      <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="35" w="700" duration="40">
-        <div class="waveform" name="C" sig="L 10 H 10 L 10 H 10"></div>
-        <div class="waveform" name="B" sig="L 10 H 10 L 10 H 10"></div>
-        <div class="waveform" name="A" sig="L 10 -H- 10 L 10 H 10"></div> 
+      
+      <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="50" w="700" duration="40">
+        <div class="waveform" name="C" sig="L 10 L 10 L 11 H 9"></div>
+        <div class="waveform" name="B" sig="L 20 H 20 L"></div>
+        <div class="waveform" name="A" sig="L 10 H 10 L 10 H 10"></div> 
         <div class="timeline"></div>
       </div>
     </div>
 
+    <p> Try sliding the transition of the B waveform </p>
+    
     
     <p><b>To reliably latch $1$ means that changes on $D$ will not affect the 
         $Q$ output</b></p>
