@@ -28,8 +28,7 @@ export class Mux2 {
             .done()
             .color(color.SCHEM_BLUE)
             .width(1);
-
-        // 
+        
         const SIDE_NUDGE = S*.3;
         const VERT_NUDGE_ZERO = S*.7;
         ctx.text("0")
@@ -52,20 +51,26 @@ export class Mux2 {
             out: new Term(ctx, S, attrs.get("out"), o.left+(1*S), o.top+(2*S)),
         };
         
+        this.userTermNames = [];
+        ["in0", "in1", "sel", "out"].forEach(termName => {
+            this.userTermNames[attrs.get(termName)] = this.terminals[termName];
+            console.log([termName, this.userTermNames[attrs.get(termName)]]);
+            console.log(this.userTermNames);
+        });
+        
         this.terminals["sel"].rotate(-90);
-        // don't edit these.
-        this.nudgeLabel("out", .1 , .1);
-        this.nudgeLabel("in0", -.95, .1);
-        this.nudgeLabel("in1", -.95, 0);
-        this.nudgeLabel("sel", 0, .45);
     }
 
-    nudgeLabel(termName, dx, dy) {
-        // TODO change this so termName refers to the user supplied
-        // terminal names, and not to the "out" "in0" .. device names
-
+    termFromUserDefName(userDefName) {
+        // need to keep a mapping from user defined name to terminal keys.
+        return this.userTermNames[userDefName];
+    }
+    
+    nudgeLabel(userDefName, dx, dy) {
+        console.log("AM NUDGING!");
         // allow users adjust terminal label positions.
-        this.terminals[termName].nudgeLabel(dx, dy);
+        // this.terminals[termName]
+        this.termFromUserDefName(userDefName).nudgeLabel(dx, dy);
     }
 
     // this should be a method an interface called Device.
