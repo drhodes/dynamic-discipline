@@ -10,7 +10,8 @@ import {SCM_FONT} from './font.js';
 
 const BACKGROUND_COLOR = "#efefef33"; // "#efefef";
 const BORDER_COLOR = "#CCC"; 
-const WAVE_COLOR = "#AAAAEEAA";
+//const WAVE_COLOR = "#AAAAEEAA";
+const WAVE_COLOR = "#3333FF77";
 const WAVE_WIDTH = 2.6; // pixels, the width of the wave line.
 const LEFT_MARGIN = 40; // margin for signal name on the left.
 
