@@ -54,8 +54,6 @@ export class Mux2 {
         this.userTermNames = [];
         ["in0", "in1", "sel", "out"].forEach(termName => {
             this.userTermNames[attrs.get(termName)] = this.terminals[termName];
-            console.log([termName, this.userTermNames[attrs.get(termName)]]);
-            console.log(this.userTermNames);
         });
         
         this.terminals["sel"].rotate(-90);
@@ -67,7 +65,6 @@ export class Mux2 {
     }
     
     nudgeLabel(userDefName, dx, dy) {
-        console.log("AM NUDGING!");
         // allow users adjust terminal label positions.
         // this.terminals[termName]
         this.termFromUserDefName(userDefName).nudgeLabel(dx, dy);

@@ -24,7 +24,6 @@ export class Term {
     }
     
     nudgeLabel(dx, dy) {
-        console.log([dx, dy]);
         this.text.move(this.x + this.scale*dx, this.y + this.scale*dy);
     }
     
@@ -36,8 +35,7 @@ export class Term {
         this.wire.rotate(deg);
     }
 
-    flashLabel() {
-        
+    flashLabel() {        
     }
     
     updateValue(v) {
