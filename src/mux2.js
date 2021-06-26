@@ -6,6 +6,8 @@ import {die, log} from './err.js';
 import {Waveform} from './waveform.js';
 import {Attributes} from './attrs.js';
 import {L, H, X} from './sig.js';
+import * as color from './color.js';
+import {SCM_FONT} from './font.js';
 
 export class Mux2 {
     constructor(ctx, div, scale, x, y) {
@@ -24,23 +26,24 @@ export class Mux2 {
             .to(-S, S*.75)
             .up(4*S)
             .done()
-            .width(3);
+            .color(color.SCHEM_BLUE)
+            .width(1);
 
         // 
         const SIDE_NUDGE = S*.3;
         const VERT_NUDGE_ZERO = S*.7;
         ctx.text("0")
-            .fill("blue")
-            .font({family: 'Share Tech Mono', size:18})
+            .fill(color.SCHEM_BLUE)
+            .font({family: SCM_FONT, size:16})
             .move(o.left + SIDE_NUDGE,
                   o.top + VERT_NUDGE_ZERO);
         
         const VERT_NUDGE_ONE = S*2.7;
         ctx.text("1")
-            .fill("blue")
-            .font({family: 'Share Tech Mono', size:18})
+            .fill(color.SCHEM_BLUE)
+            .font({family: SCM_FONT, size:16})
             .move(o.left + SIDE_NUDGE, o.top + VERT_NUDGE_ONE);
-
+        
         // allocate terminals.
         this.terminals = {
             in0: new Term(ctx, S, attrs.get("in0"), o.left-(1*S), o.top+(1*S)),
@@ -58,6 +61,9 @@ export class Mux2 {
     }
 
     nudgeLabel(termName, dx, dy) {
+        // TODO change this so termName refers to the user supplied
+        // terminal names, and not to the "out" "in0" .. device names
+
         // allow users adjust terminal label positions.
         this.terminals[termName].nudgeLabel(dx, dy);
     }

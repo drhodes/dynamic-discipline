@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <title>The Dynamic Discipline</title>
-    <!-- <script src="https://unpkg.com/lodash@4.17.20"></script> -->
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Literata:wght@300&display=swap');
@@ -11,16 +10,18 @@
       @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
       
       p { font-size: 16pt;
-          font-family: 'Literata', serif; 
+          /* font-family: 'Saira Condensed', serif;  */
+          font-family: 'Literata', serif;
           max-width: 600px;
           margin: 0 auto !important;
           float: none !important;              
-          padding: 0 0 15pt 0;
+          padding: 0 0 10pt 0;
         }
 
       body {
           /* font-family: 'Literata', serif; */
           font-family: 'Saira Condensed', sans-serif;
+          /* font-family: 'routed-gothic'; */
           max-width: 730px;
           margin: 0 auto !important;
           background-color: #FFF;
@@ -34,16 +35,17 @@
       }
 
       .wavegroup {
-          background-color: #FFF;
-          padding: 0px 0 40px 0;          
+          background-color: #00000000;
+          padding: 0px 0 20px 0;          
       }
       
       .bench-title {
-          font-size: 80px;
+          font-size: 100px;
+          color: #33333322;
           font-weight: bold;
       }
 
-      .bench { }
+      .bench {}
       
       .spacer100 { padding : 100px 0 0 0; }
       
@@ -51,9 +53,9 @@
 
   </head>
   
-  <body bgcolor="#BBB">
+  <body>
     <h1>WORK IN PROGRESS</h1>
-    <h1>Understanding the Dynamic D1scipline</h1>
+    <h1>Understanding the Dynamic Discipline</h1>
     <hr>
     
     <br><br>
@@ -73,13 +75,12 @@
       <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
     </p>
     
-    <hr>
     <center><div class="bench-title"> A MUX WARM UP </div></center>
     <div id="bench1" class="bench">
-      <div id="schem1" class="schem" h="300" w="700">
-        <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>      
+      <div id="schem1" class="schem" h="250" w="700">
+        <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>
       </div>
-      <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="40" w="700" duration="40">
+      <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="35" w="700" duration="40">
         <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" ></div>
         <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10"></div>
         <div class="waveform" name="D1" sig="H 20 L 20"></div>

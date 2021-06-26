@@ -7,6 +7,7 @@ export class Poly {
         this.y = y;
         this.segments = [x, y];
         this.dashoffset = 0;
+        this.dashesMoving = true;
         this.polyline = null; // make sure to throw error if this is
                               // attempted to be drawn without proper
                               // initialization.
@@ -116,10 +117,18 @@ export class Poly {
         return this;
     }
 
+    stopDashes() { this.dashesMoving = false; }
+    startDashes() { this.dashesMoving = true; }
+    
     // rename this function: stepDashAnimation
     update() {
-        this.dashoffset -= .05;
-        this.polyline.stroke({ dashoffset: this.dashoffset});
+        if (this.dashesMoving) {
+            this.dashoffset -= .05;
+            this.polyline.stroke({ dashoffset: this.dashoffset});
+        } else {
+            //this.dashoffset -= ;
+            this.polyline.stroke({ dashoffset: this.dashoffset});
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 import * as SVG from '@svgdotjs/svg.js';
 import {die, log} from './err.js';
 import {Wire} from './wire.js';
+import {SCM_FONT} from './font.js';
 import {L, H, X} from './transition.js';
 
 export class Term {
@@ -16,12 +17,12 @@ export class Term {
 
         this.text = ctx.text(".")
             .fill("blue")
-            .font({family: 'Share Tech Mono', size: 22 })
+            .font({family: SCM_FONT, size: 20 })
             .move(x,y);
         
         this.updateValue(this.value);
     }
-
+    
     nudgeLabel(dx, dy) {
         console.log([dx, dy]);
         this.text.move(this.x + this.scale*dx, this.y + this.scale*dy);
@@ -42,6 +43,14 @@ export class Term {
     updateValue(v) {
         this.value = v;
         this.text.text(this.name + "=" + v);
+
+        // stopping dashes to represent ground may not be good for
+        // learning.
+        if (v == L) {
+            this.wire.line.stopDashes();
+        } else {
+            this.wire.line.startDashes();
+        }
     }
 
     getPoints() {        

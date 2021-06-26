@@ -6,14 +6,16 @@ import {Transition} from './transition.js';
 import {Sig} from './sig.js';
 import {L, H, X} from './transition.js';
 import {Attributes} from './attrs.js';
+import {SCM_FONT} from './font.js';
 
-const BACKGROUND_COLOR = "#efefef";
-const BORDER_COLOR = "#aaa";
-const WAVE_COLOR = "#555";
-const WAVE_WIDTH = 3; // pixels, the width of the wave line.
+const BACKGROUND_COLOR = "#efefef33"; // "#efefef";
+const BORDER_COLOR = "#CCC"; 
+const WAVE_COLOR = "#AAAAEEAA";
+const WAVE_WIDTH = 2.6; // pixels, the width of the wave line.
 const LEFT_MARGIN = 40; // margin for signal name on the left.
 
-const TIMELINE_WIDTH = 3;
+const FONT_COLOR = "#444";
+const TIMELINE_WIDTH = 2;
 const TIMELINE_COLOR = "#00FF00AA";
 
 // A waveform
@@ -34,7 +36,6 @@ export class Waveform {
         this.div = div;
         this.attrs = new Attributes(div);
         this.duration = duration;
-
         this.currentTime = 0;
         
         // TODO if transitions does not contain a transition at an instant
@@ -123,8 +124,8 @@ export class Waveform {
         const TEXT_X = 0;
         
         this.ctx.text(this.name)
-            .fill("black")
-            .font({family: 'Share Tech Mono', size: 22 })
+            .fill(FONT_COLOR)
+            .font({family: SCM_FONT, size: 22 })
             .move(TEXT_X, TEXT_Y);
     }
 
