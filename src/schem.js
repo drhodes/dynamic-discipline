@@ -34,7 +34,7 @@ export class Schematic {
     }
 
     addAnd2(divName, x, y) {
-        let and2 = new And2(this.ctx, document.getElementById(divName), 30, x, y);
+        let and2 = new And2(this.ctx, document.getElementById(divName), 40, x, y);
         this.addDevice(divName, and2);
         return and2;
     }

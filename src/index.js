@@ -19,27 +19,31 @@ function aMuxWarmUp() {
 }
 aMuxWarmUp();
 
-// function slideATransition() {
-//     let div = document.getElementById("bench2");
-//     console.log(div);
-//     let bench = new LabBench(div);    
-//     let schem = bench.schematic;
-//     let and2 = schem.addAnd2("and2-slide", 350, 50);
-// }
-// slideATransition();
-
-function BuildFeedback1() {
-    // this works, but the wires are a bit tedius, a better way?
-    let schem = new Schematic(document.getElementById("schem1"));
-    let mux2 = schem.addMux("mux-2", 350, 50);
-
-    let p = mux2.getConnectionPx("out");
-    console.log(p);
-
-    let wire1 = schem.addWire("wire1", p[0], p[1]);
-    // let wire1 = schem.addWire("wire1", p[0], p[1]);
-    wire1.rt(50).up(75+10).lt(140).dn(45+10).dashed().done();
-    wire1.init().dashed().animate();
-
-    new WaveGroup(document.getElementById("wavegroup1"));
+function slideATransition() {
+    let div = document.getElementById("bench2");
+    console.log(div);
+    let bench = new LabBench(div);    
+    let schem = bench.schematic;
+    let and2 = schem.addAnd2("and2-slide", 320, 50);
+    and2.nudgeLabel("A", -1.0, -.27);
+    and2.nudgeLabel("B", -1.0, -.27);
+    and2.nudgeLabel("C", 1.3, -.27);
+    
 }
+slideATransition();
+
+// function BuildFeedback1() {
+//     // this works, but the wires are a bit tedius, a better way?
+//     let schem = new Schematic(document.getElementById("schem1"));
+//     let mux2 = schem.addMux("mux-2", 350, 50);
+
+//     let p = mux2.getConnectionPx("S");
+//     console.log(p);
+
+//     let wire1 = schem.addWire("wire1", p[0], p[1]);
+//     // let wire1 = schem.addWire("wire1", p[0], p[1]);
+//     wire1.rt(50).up(75+10).lt(140).dn(45+10).dashed().done();
+//     wire1.init().dashed().animate();
+
+//     new WaveGroup(document.getElementById("wavegroup1"));
+// }
