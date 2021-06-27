@@ -24,7 +24,7 @@ function slideATransition() {
     console.log(div);
     let bench = new LabBench(div);    
     let schem = bench.schematic;
-    let and2 = schem.addAnd2("and2-slide", 320, 50);
+    let and2 = schem.addAnd2("and2-slide", 320, 30);
     and2.nudgeLabel("A", -1.0, -.27);
     and2.nudgeLabel("B", -1.0, -.27);
     and2.nudgeLabel("C", 1.3, -.27);

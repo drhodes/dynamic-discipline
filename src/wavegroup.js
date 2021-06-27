@@ -20,7 +20,7 @@ export class WaveGroup {
 
         this.waveforms = []; // map from waveform name to waveform
 
-        div.children.forEach( el => {            
+        Object.values(div.children).forEach( el => {             
             let atts = new Attributes(el);
             // check that element (el) is a waveform.
             if (atts.hasAttr("class") && atts.get("class").indexOf("waveform") != -1) {

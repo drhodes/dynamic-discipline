@@ -10,13 +10,13 @@ import {Chan} from './chan.js';
 export class LabBench {
     constructor(div) {
         if (!div) die("LabBench constructor got a bad div: " + div);
-        console.log(div)
         this.div = div;
         this.schematic = null;
         this.wavegroup = null;
 
         //
-        div.children.forEach( el => {             
+        //console.log(div.children);
+        Object.values(div.children).forEach( el => {             
             console.log(this);
             let atts = new Attributes(el);
             if (atts.hasClass("schem")) {
@@ -34,6 +34,6 @@ export class LabBench {
     update(wavegroup) {
         let sigmap = wavegroup.getSignalMap();        
         this.schematic.update(sigmap);
-        // this.wavegroup.update(); TODO make this more consistent.
+        this.wavegroup.updateTimeLines(); // TODO make this more consistent.
     }
 }
