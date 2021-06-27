@@ -24,8 +24,8 @@ export class Mux2 extends Device {
             sel: new Term(ctx, S, attrs.get("sel"), o.left+(0), o.top+(4.1*S)),
             out: new Term(ctx, S, attrs.get("out"), o.left+(1*S), o.top+(2*S)),
         };
+        
         super(terminals, attrs);
-
         // Draw! ------------------------------------------------------------------
         
         let icon = new Poly(ctx, o.left, o.top)
@@ -38,7 +38,7 @@ export class Mux2 extends Device {
             .width(1);
         
         const SIDE_NUDGE = S*.3;
-        const VERT_NUDGE_ZERO = S*.7;
+        const VERT_NUDGE_ZERO = S*.7;        
         ctx.text("0")
             .fill(color.SCHEM_BLUE)
             .font({family: SCM_FONT, size:16})
@@ -69,13 +69,4 @@ export class Mux2 extends Device {
     //         die("Could not find terminal: " + termName);
     //     }
     // }
-
-    update(sigmap) {        
-        for (let term of Object.values(this.terminals)) {            
-            let val = sigmap[term.name];
-            if (val && val.ok) {
-                term.updateValue(val.val);
-            }
-        }
-    }
 }

@@ -27,6 +27,16 @@ export class Device {
         // allow users adjust terminal label positions.
         this.termFromUserDefName(userDefName).nudgeLabel(dx, dy);
     }
+
+    update(sigmap) {        
+        for (let term of Object.values(this.terminals)) {            
+            let val = sigmap[term.name];
+            if (val && val.ok) {
+                term.updateValue(val.val);
+            }
+        }
+    }
+
     
     // this should be a method an interface called Device.
     // getConnectionPx(termName) {

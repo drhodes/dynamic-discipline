@@ -35,27 +35,5 @@ export class And2 extends Device {
     }
     
     // this should be a method an interface called Device.
-    getConnectionPx(termName) {
-        // get the absolute pixel position of a terminal give a
-        // terminal name
-        let term = this.terminals[termName];
-        let ps = term.getPoints();
-        if (term) {
-            if (termName == "out") {
-                return ps[1];
-            }
-            die("need to handle other terminal names");
-        } else {
-            die("Could not find terminal: " + termName);
-        }
-    }
-
-    update(sigmap) {        
-        for (let term of Object.values(this.terminals)) {            
-            let val = sigmap[term.name];
-            if (val && val.ok) {
-                term.updateValue(val.val);
-            }
-        }
-    }
+    getConnectionPx(termName) { die("unimplemented"); }
 }
