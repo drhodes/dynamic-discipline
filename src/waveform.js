@@ -23,22 +23,10 @@ const TIMELINE_COLOR = "#00FF00AA";
 //
 // Use declarative definition in html
 //
-// <div ... name="Q" sig="L 10 H 20 L 20 X 10"  h="40" w="700"></div>
-//
-
-var mouseDown = 0;
-document.body.onmousedown = function() { 
-    mouseDown = 1;
-}
-document.body.onmouseup = function() {
-    mouseDown = 0;
-}
-
 
 export class Waveform {
     // extends event harness, an event dispatcher
-    // for objects.???  think about it.
-    
+    // for objects.???  think about it.    
     constructor(div, parent, w, h, duration) {
         // An interactive signal which is optionally associated with
         // circuit terminal.

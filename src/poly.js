@@ -85,7 +85,7 @@ export class Poly {
         this.polyline = this.ctx
             .polyline(this.segments)
             .fill('none')
-            .stroke({ width: 2, color:'blue'});
+            .stroke({ width: 3, color:'blue'});
         return this;
     }
 
@@ -123,11 +123,11 @@ export class Poly {
     // rename this function: stepDashAnimation
     update() {
         if (this.dashesMoving) {
-            this.dashoffset -= .05;
+            this.dashoffset -= .1;
             this.polyline.stroke({ dashoffset: this.dashoffset});
         } else {
-            //this.dashoffset -= ;
-            this.polyline.stroke({ dashoffset: this.dashoffset});
+            // //this.dashoffset -= ;
+            // this.polyline.stroke({ dashoffset: this.dashoffset});
         }
     }
 }

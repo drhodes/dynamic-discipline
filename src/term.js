@@ -45,9 +45,9 @@ export class Term {
         // stopping dashes to represent ground may not be good for
         // learning.
         if (v == L) {
-            this.wire.line.stopDashes();
+            this.wire.color("green");
         } else {
-            this.wire.line.startDashes();
+            this.wire.color("red");
         }
     }
 

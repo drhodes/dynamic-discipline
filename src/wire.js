@@ -25,6 +25,10 @@ export class Wire {
         // get the polyline points.
         return this.line.getPoints();
     }
+
+    color(c) {
+        this.line.color(c);
+    }
     
     check_init() {
         // is this wire initialized?
