@@ -23,6 +23,9 @@ const TIMELINE_COLOR = "#00FF00AA";
 //
 // Use declarative definition in html
 //
+// <div class="waveform" name="Q" sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" type="out"></div>
+// <div class="waveform" name="Q" sig="and(not(A), not(B))" type="out"></div>
+// 
 
 export class Waveform {
     // extends event harness, an event dispatcher
