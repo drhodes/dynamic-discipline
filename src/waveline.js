@@ -1,4 +1,6 @@
 import {die, log} from './err.js';
+import {L, H, X} from './transition.js';
+import * as color from './color.js';
 
 export class WaveLine {
     constructor(ctx, sig, h, w, x, y) {        
@@ -6,7 +8,7 @@ export class WaveLine {
         this.arr = [];
         this.h = h;
         // point density. 1 point every PD pixels.
-        const PD = 5;
+        const PD = 4;
 
         const PIXEL_LEFT = x;
         const PIXEL_RIGHT = x + w;
@@ -23,7 +25,7 @@ export class WaveLine {
         this.polyline = ctx
             .polyline(this.arr)
             .fill('none')
-            .stroke({ width: 2, color: "grey" })
+            .stroke({ width: 2, color: color.SCHEM_BLUE })
         ;
         this.polyline.move(x, 0);
         this.refreshLoop();
@@ -46,11 +48,13 @@ export class WaveLine {
                 for(var i = 0; i<20; i++) {
                     let rval = Math.random();
                     let curVal = this.sig.valueAtTime(curTime);
-                    // console.log([curTime, curVal]);
-                    if (curVal.val == 1) {
+                    
+                    if (curVal == H) {
                         ps[pidx].y = 2 + rval;
-                    } else {
+                    } else if (curVal == L) {
                         ps[pidx].y = this.h - 2 + rval;
+                    } else if (curVal == X) {
+                        ps[pidx].y = 2 + this.h * rval;
                     }
                     pidx += 1;
                     curTime += timePerIdx/2;

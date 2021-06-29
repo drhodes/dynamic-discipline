@@ -56,10 +56,10 @@ export class Waveform {
         this.ctx = SVG.SVG().addTo(div);
         this.ctx.size(this.widthPx, this.heightPx);
 
+        this.waveline = new WaveLine(this.ctx, this.sig, h, w-LEFT_MARGIN, LEFT_MARGIN, 10);
         this.render();
         this.registerEvents();
 
-        this.waveline = new WaveLine(this.ctx, this.sig, h, w-LEFT_MARGIN, LEFT_MARGIN, 10);
     }
 
     updateTimeLine(x) {
@@ -88,6 +88,11 @@ export class Waveform {
         let m = (this.widthPx - LEFT_MARGIN)/this.duration;
         let t = (1/m) * (x - LEFT_MARGIN);
         return t;
+    }
+
+    deltaTimeFromPx(dx) {
+        let nsPerPixel = this.duration / (this.widthPx - LEFT_MARGIN);
+        return nsPerPixel*dx;
     }
     
     // allocate mutable SVG elements
@@ -152,48 +157,9 @@ export class Waveform {
     }
     
     renderWave() {
-        const BOTTOM_BORDER = this.heightPx - WAVE_WIDTH/2; // hug the bottom border.
-        const TOP_BORDER = 0 + WAVE_WIDTH/2;                // hug the top    border.
-        const RIGHT_BORDER = this.widthPx;
-        const RISEFALL_DISTANCE = this.heightPx - WAVE_WIDTH;
-
-        var ts = this.sig.transitions;
-        let polyline;
-
-        // One or many transitions .           
-        var curValue = ts[0].value;
-        var dx = this.pxFromTime(ts[0].t);
-        var curX = LEFT_MARGIN;            
-        var curY = curValue == H ? TOP_BORDER : BOTTOM_BORDER;
-
-        // start at the right logic value
-        polyline = new Poly(this.ctx, curX, curY);
-        polyline.rt(dx);
-
-        ts.slice(1).forEach(trans => {  
-            // only transition from hi to low or vice versa if the
-            // wave changes logic value.
-            if (curValue != trans.value) {
-                if (curValue == L) {
-                    polyline.up(RISEFALL_DISTANCE);
-                } else {
-                    polyline.dn(RISEFALL_DISTANCE);
-                }
-            }
-            
-            var dx = this.pxFromTime(trans.t);
-            polyline.rt(dx);
-            curValue = trans.value;
-
-        });
-    
-        // TODO need to refactor polyline to remove the requirement to call .done() 
-        polyline.done().color(WAVE_COLOR).width(WAVE_WIDTH);
-
-        ts.slice(1).forEach(trans => {  
+        this.sig.transitions.slice(1).forEach(trans => {  
             if (trans.isSliding()) this.initSlidingTransitionHandle(trans);
         });
-                            
     }
 
     initSlidingTransitionHandle(transition) {
@@ -229,7 +195,12 @@ export class Waveform {
         ;
 
         let heel = ev => {
-            handle.move(ev.layerX-HANDLE_WIDTH/2, y);
+            let newx = ev.layerX-HANDLE_WIDTH/2;
+            let dx = ev.layerX - x;
+            let dt = this.deltaTimeFromPx(ev.layerX - x);
+            console.log(dt);
+            transition.updateHandleDeltaT(dt);
+            handle.move(newx, y);
         }
         
         handle.mouseover(function(ev) { this.fill(color.SCHEM_BLUE); });        

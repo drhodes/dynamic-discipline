@@ -1,7 +1,9 @@
 import * as SVG from '@svgdotjs/svg.js';
-import {die, log} from './err.js';
+import {die, log, ok, err, unimplemented} from './err.js';
 import {SlidingTransition, Transition} from './transition.js';
 import {L, H, X} from './transition.js';
+
+const nope = {ok: false, value:null};
 
 export class Sig {
     // "L 10 H 20 L 20 X 10"
@@ -18,6 +20,8 @@ export class Sig {
         function isSlidingTransition(m) {
             return m[1] == "<L>" || m[1] == "<H>";
         }
+
+        let curTime = 0;
         
         matches.forEach(m => {
             let value =
@@ -26,7 +30,7 @@ export class Sig {
                 m[1] == "H" ? H :
                 m[1] == "<H>" ? H :
                 m[1] == "X" ? X : die("unrecognized logic value: "+ m[1]);
-                
+            
             let duration = Number.parseFloat(m[2]);
             if (Number.isNaN(duration)) die("Couldn't parse: " + m[2] + " as a duration");
             
@@ -37,33 +41,49 @@ export class Sig {
                 // where <H14> is a sliding transition to H with slidetime = 14.
                 // slidetime must be less than the surrounding durations.
                 
-                this.transitions.push(new SlidingTransition(duration, value, SLIDE_TIME));
+                this.transitions.push(new SlidingTransition(curTime, duration, value, SLIDE_TIME));
             } else {
-                this.transitions.push(new Transition(duration, value));
+                this.transitions.push(new Transition(curTime, duration, value));
             }
+            curTime += duration;
         });
+        this.setPrevNextVals();
     }
 
+    setPrevNextVals() {
+        for (var i=1; i<this.transitions.length-1; i++) {
+            let prevT = this.transitions[i-1];
+            let curT =  this.transitions[i];
+
+            curT.prevTransitionValue = prevT.value;
+
+            if (i < this.transitions.length) {
+                let nextT = this.transitions[i+1];
+                curT.nextTransitionValue = nextT.value;
+            }
+            
+        }
+    }
+ 
     valueAtTime(t) {
-        let curTime = 0;
-        let result = {ok:false, val:-1};
-        this.transitions.every(trans => {
-            if (t >= curTime && t < curTime + trans.t) {
-                result = {ok: true, val: trans.value};
-                return false; // break 
+        for (var i=0; i<this.transitions.length; i++) {
+            let onLastTransitionP = i == this.transitions.length - 1;            
+            var curTrans = this.transitions[i];
+            let cs = curTrans.isSliding();
+            
+            if (!onLastTransitionP) {
+                let nextTrans = this.transitions[i+1];
+                if (curTrans.t <= t && t <= (nextTrans.t + nextTrans.handleDeltaT)) {
+                    return curTrans.value; //curTrans.value;
+                }                
+            } else {
+                // on last transition
+                if (curTrans.t <= t <= curTrans.t + curTrans.duration) {
+                    return H; //return curTrans.value;
+                }                
             }
-            curTime += trans.t;
-            return true; // continue
-        });
-        return result;
+        }
+        return X;
     }
-
-    adjustTransition(n, dx) {
-        if (n==0) die("can't adjust the first transition");
-        if (n>=this.transitions.length) die("transition index out of range");
-        // 
-    }
-
 }
-
 
