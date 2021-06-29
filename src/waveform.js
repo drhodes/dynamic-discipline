@@ -8,6 +8,8 @@ import {Sig} from './sig.js';
 import {L, H, X} from './transition.js';
 import {Attributes} from './attrs.js';
 import {SCM_FONT} from './font.js';
+import {WaveLine} from './waveline.js';
+
 
 const BACKGROUND_COLOR = "#efefef33"; // "#efefef";
 const BORDER_COLOR = "#CCC"; 
@@ -43,18 +45,21 @@ export class Waveform {
         // in time equal to the duration - that is - the last
         // transition happens at some point in the middle of the
         
-        this.sig = new Sig(this.attrs.get("sig"));
+        this.sig = new Sig(this.attrs.get("sig"), duration);
         this.transitions = this.sig.transitions;
         this.transition_handles = [];
         
         this.heightPx = h;
         this.widthPx = w;
         this.name  = this.attrs.get("name");
-
+       
         this.ctx = SVG.SVG().addTo(div);
         this.ctx.size(this.widthPx, this.heightPx);
+
         this.render();
         this.registerEvents();
+
+        this.waveline = new WaveLine(this.ctx, this.sig, h, w-LEFT_MARGIN, LEFT_MARGIN, 10);
     }
 
     updateTimeLine(x) {

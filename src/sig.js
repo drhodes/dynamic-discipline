@@ -5,15 +5,19 @@ import {L, H, X} from './transition.js';
 
 export class Sig {
     // "L 10 H 20 L 20 X 10"
-    constructor(sigString) {        
+    constructor(sigString, duration) {
+        this.duration = duration;
         this.transitions = [];        
         this.parse(sigString);
     }
-
     
     parse(sigString) {
         let regex = /(L|H|X|<H>)\s([0-9]*)/g;
         let matches = [...sigString.matchAll(regex)];
+
+        function isSlidingTransition(m) {
+            return m[1] == "<L>" || m[1] == "<H>";
+        }
         
         matches.forEach(m => {
             let value =
@@ -26,7 +30,7 @@ export class Sig {
             let duration = Number.parseFloat(m[2]);
             if (Number.isNaN(duration)) die("Couldn't parse: " + m[2] + " as a duration");
             
-            if (this.isSlidingTransition(m)) {
+            if (isSlidingTransition(m)) {
                 const SLIDE_TIME = 10;
                 // TODO, add syntax to regex to specify slide time.
                 // something like <div class="waveform" name="B" sig="L 20 <H14> 20"></div>
@@ -60,9 +64,6 @@ export class Sig {
         // 
     }
 
-    isSlidingTransition(m) {
-        return m[1] == "<L>" || m[1] == "<H>";
-    }
 }
 
 
