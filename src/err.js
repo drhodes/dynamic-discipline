@@ -11,3 +11,13 @@ export function log(msg) {
 export function ok(val) {
     return {ok: true, value:val};
 }
+
+export function err(msg) {
+    return {ok: false, value:msg};
+}
+
+export function unimplemented(msg) {
+    die("unimplemented: " + msg);
+}
+
+
