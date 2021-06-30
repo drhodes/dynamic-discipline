@@ -31,9 +31,7 @@ export class Device {
     update(sigmap) {        
         for (let term of Object.values(this.terminals)) {            
             let val = sigmap[term.name];
-            if (val && val.ok) {
-                term.updateValue(val.val);
-            }
+            term.updateValue(val);
         }
     }
 

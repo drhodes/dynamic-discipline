@@ -197,11 +197,10 @@ export class Waveform {
         let heel = ev => {
             let newx = ev.layerX-HANDLE_WIDTH/2;
             let dx = ev.layerX - x;
-            let dt = this.deltaTimeFromPx(ev.layerX - x);
-            console.log(dt);
+            let dt = this.deltaTimeFromPx(dx);
             transition.updateHandleDeltaT(dt);
             handle.move(newx, y);
-        }
+        };
         
         handle.mouseover(function(ev) { this.fill(color.SCHEM_BLUE); });        
         handle.mouseout(function(ev)  { this.fill(color.SCHEM_BLUE_TRANSLUCENT); });        
@@ -219,8 +218,5 @@ export class Waveform {
         bounds.mousemove(ev => { if (inBounds(ev.layerX) && dragging) heel(ev); });
         bounds.mouseup(ev => { dragging = false; });
         bounds.mousedown(function(ev) { if (inBounds(ev.layerX)) { heel(ev); dragging = true; }});
-
-        
-        
     }
 }

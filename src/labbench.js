@@ -34,6 +34,6 @@ export class LabBench {
     update(wavegroup) {
         let sigmap = wavegroup.getSignalMap();        
         this.schematic.update(sigmap);
-        this.wavegroup.updateTimeLines(); // TODO make this more consistent.
+        //wavegroup.updateTimeLines(); // TODO make this more consistent.
     }
 }

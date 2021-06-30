@@ -41,13 +41,15 @@ export class Term {
     updateValue(v) {
         this.value = v;
         this.text.text(this.name + "=" + v);
-
-        // stopping dashes to represent ground may not be good for
-        // learning.
+        
         if (v == L) {
             this.wire.color("green");
-        } else {
+        } else if (v == H) {       
             this.wire.color("red");
+        } else if (v == X) {
+            this.wire.color("gray");
+        } else {
+            this.wire.color("yellow");
         }
     }
 

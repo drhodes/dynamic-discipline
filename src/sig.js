@@ -79,7 +79,7 @@ export class Sig {
             } else {
                 // on last transition
                 if (curTrans.t <= t <= curTrans.t + curTrans.duration) {
-                    return H; //return curTrans.value;
+                    return curTrans.value;
                 }                
             }
         }
