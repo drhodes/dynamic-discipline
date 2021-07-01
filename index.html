@@ -99,15 +99,21 @@
     <div class="spacer200 lightline"></div>    
 
     <center><div class="bench-title"> SLIDE A TRANSITION </div></center>
+
+    <p> Reducing the time between cause and effect increases the
+    number of curiousity driven learning experiments we can do. In
+    this example $t_{PD}$ is observed in the waveforms as a lag on the
+    output </p>
+    
     <div id="bench2" class="bench">
       <div id="schem1" class="schem" h="150" w="700">
         <div id="and2-slide" class="and2" in0="A" in1="B" out="C"></div>
       </div>
       
       <div class="wavegroup" name="wavegroup1" h="50" w="700" duration="40">
-        <div class="waveform" name="C" sig="L 10 L 10 L 11 H 9"></div>
+        <div class="waveform" name="C" sig="and(A,B)" func="true"></div>
         <div class="waveform" name="B" sig="L 20 <H> 20"></div>
-        <div class="waveform" name="A" sig="X 5 L 5 H 10 L 10 H 10"></div> 
+        <div class="waveform" name="A" sig="L 10 H 10 L 10 H 10"></div> 
         <div class="timeline"></div>
       </div>
     </div>

@@ -9,7 +9,7 @@ export class WaveLine {
         this.h = h;
         // point density. 1 point every PD pixels.
         // the higher this is the lower the density.
-        const PD = 5;
+        const PD = 3;
         const PIXEL_LEFT = x;
         const PIXEL_RIGHT = x + w;
 
@@ -40,7 +40,7 @@ export class WaveLine {
         
         let f = _=> {
             window.requestAnimationFrame(_=> {
-                for(var i = 0; i<20; i++) {
+                for(var i = 0; i<50; i++) {
                     let rval = Math.random();
                     let curVal = this.sig.valueAtTime(curTime);
                     

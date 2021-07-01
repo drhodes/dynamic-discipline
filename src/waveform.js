@@ -4,7 +4,7 @@ import * as color from './color.js';
 import {die, log} from './err.js';
 import {Poly} from './poly.js';
 import {Transition} from './transition.js';
-import {Sig} from './sig.js';
+import {Sig, SigFunc} from './sig.js';
 import {L, H, X} from './transition.js';
 import {Attributes} from './attrs.js';
 import {SCM_FONT} from './font.js';
@@ -29,8 +29,6 @@ const TIMELINE_COLOR = "#00FF00AA";
 // 
 
 export class Waveform {
-    // extends event harness, an event dispatcher
-    // for objects.???  think about it.    
     constructor(div, parent, w, h, duration) {
         // An interactive signal which is optionally associated with
         // circuit terminal.
@@ -39,8 +37,13 @@ export class Waveform {
         this.attrs = new Attributes(div);
         this.duration = duration;
         this.currentTime = 0;
+
+        if (this.attrs.hasAttr("func")) {
+            this.sig = new SigFunc(this.attrs.get("sig"), duration, this);
+        } else {
+            this.sig = new Sig(this.attrs.get("sig"), duration, this);
+        }
         
-        this.sig = new Sig(this.attrs.get("sig"), duration);
         this.transitions = this.sig.transitions;
         this.transition_handles = [];
         
