@@ -47,7 +47,7 @@ export class Sig {
             }
             curTime += duration;
         });
-        this.setPrevNextVals();
+        //this.setPrevNextVals();
     }
 
     setPrevNextVals() {

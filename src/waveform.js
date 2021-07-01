@@ -10,7 +10,6 @@ import {Attributes} from './attrs.js';
 import {SCM_FONT} from './font.js';
 import {WaveLine} from './waveline.js';
 
-
 const BACKGROUND_COLOR = "#efefef33"; // "#efefef";
 const BORDER_COLOR = "#CCC"; 
 const WAVE_COLOR = "#3333FF77";
@@ -41,10 +40,6 @@ export class Waveform {
         this.duration = duration;
         this.currentTime = 0;
         
-        // TODO if transitions does not contain a transition at an instant
-        // in time equal to the duration - that is - the last
-        // transition happens at some point in the middle of the
-        
         this.sig = new Sig(this.attrs.get("sig"), duration);
         this.transitions = this.sig.transitions;
         this.transition_handles = [];
@@ -59,7 +54,6 @@ export class Waveform {
         this.waveline = new WaveLine(this.ctx, this.sig, h, w-LEFT_MARGIN, LEFT_MARGIN, 10);
         this.render();
         this.registerEvents();
-
     }
 
     updateTimeLine(x) {
@@ -74,10 +68,8 @@ export class Waveform {
         // is a linear relationship, where the pixel width of the
         // waveform and the total duration of the waveform measure the
         // same screen distance
-        
         let m = (this.widthPx - LEFT_MARGIN)/this.duration;
         return m * ns; // :: (pixels/time) * time = pixels
-        
     }
 
     timeFromPx(x) {

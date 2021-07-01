@@ -27,16 +27,8 @@ export class Term {
         this.text.move(this.x + this.scale*dx, this.y + this.scale*dy);
     }
     
-    leadLength() {
-        return this.scale;
-    }
-
-    rotate(deg) {
-        this.wire.rotate(deg);
-    }
-
-    flashLabel() {        
-    }
+    leadLength() { return this.scale; }
+    rotate(deg) { this.wire.rotate(deg); }
     
     updateValue(v) {
         this.value = v;
@@ -53,9 +45,7 @@ export class Term {
         }
     }
 
-    getPoints() {        
-        return this.wire.getPoints();
-    }
+    getPoints() { return this.wire.getPoints(); }
 }
 
 class WireState {
