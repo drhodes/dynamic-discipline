@@ -15,8 +15,13 @@ export class Transition {
         this.prevTransitionValue = null;
         this.nextTransitionValue = null;
         this.handleDeltaT = 0;
+        this.id = Math.random();
     }
 
+    adjTime() {
+        return this.t + this.handleDeltaT;
+    }
+    
     set prevTransitionValue(v) { this._prevTransitionValue = v; }
     set nextTransitionValue(v) { this._nextTransitionValue = v; }
 
@@ -30,12 +35,13 @@ export class SlidingTransition extends Transition {
     constructor(t, duration, logicValue, slidetime) {        
         super(t, duration, logicValue);        
         this.slidetime = slidetime;
-        this.handleDeltaT = 0;
     }
 
     updateHandleDeltaT(dt) {
         this.handleDeltaT = dt;
+        //xconsole.log("updating handleDeltaT
     }
+
 
     get handleDeltaT() { return this._handleDeltaT; }
     set handleDeltaT(dt) { this._handleDeltaT = dt; }

@@ -32,27 +32,33 @@ export class WaveLine {
     }
     
     refreshLoop() {
-        let ps = Object.values(this.polyline.node.points);
-        let pidx = 0;
+        let ps = Object.values(this.polyline.node.points); // points
+        let pidx = 0; // point index
         let curTime = 0;
         let numPoints = ps.length;
         let timePerIdx = this.sig.duration / numPoints;
-        
+
         let f = _=> {
+            const POINTS_PER_FRAME = 50; 
             window.requestAnimationFrame(_=> {
-                for(var i = 0; i<50; i++) {
+                for(var i = 0; i<POINTS_PER_FRAME; i++) {
                     let rval = Math.random();
                     let curVal = this.sig.valueAtTime(curTime);
-                    
-                    if (curVal == H) {
+
+                    switch(curVal) {
+                    case H: 
                         ps[pidx].y = 2 + rval;
-                    } else if (curVal == L) {
+                        break;
+                    case L: 
                         ps[pidx].y = this.h - 2 + rval;
-                    } else if (curVal == X) {
+                        break;
+                    case X : 
                         let centerY = this.h/2;
-                        let noiseOffset = this.h/5 * rval;
+                        let noiseOffset = this.h/10 * rval;
                         ps[pidx].y = centerY + noiseOffset;
+                        break;
                     }
+                    
                     pidx += 1;
                     curTime += timePerIdx;
                     

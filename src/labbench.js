@@ -36,4 +36,9 @@ export class LabBench {
         this.schematic.update(sigmap);
         //wavegroup.updateTimeLines(); // TODO make this more consistent.
     }
+
+    specialSigfunc(signame, f) {
+        this.wavegroup.getWaveform(signame).setSpecialSigFunc(f);
+        // figure out if installing f into Sig.valueAtTime makes sense.
+    }
 }

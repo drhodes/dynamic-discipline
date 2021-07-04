@@ -13,8 +13,13 @@ export class Sig {
         this.transitions = [];
         this.sigString = sigString;
         this.parse(sigString);
+        this.specialSigfunc = null;
     }
-    
+
+    setSpecialSigFunc(f) {
+        this.specialSigfunc = f;
+    }
+
     parse(sigString) {
         let regex = /(L|H|X|<H>|<L>)\s([0-9]*)/g;
         let matches = [...sigString.matchAll(regex)];
@@ -79,6 +84,7 @@ export class Sig {
 
 export class SigFunc extends Sig {
     constructor(sigString, duration, parent) {
+        // passing parent supports two way databinding.
         super(sigString, duration, parent);
         this.valueFunc = null;
     }
@@ -91,22 +97,41 @@ export class SigFunc extends Sig {
     // real numbers and partition them evenly into two sets.
     
     valueAtTime(t) {
-        const TPD = 2; // this is just for testing, TPD will need to be with the device.
+        let wavegroup = this.parent.parent;
+        const TPD = 2; 
         
-        // these names (A&B) need to be extracted from the sigstring
-        var A = this.parent.parent.getWaveform("A").sig;
-        var B = this.parent.parent.getWaveform("B").sig;
-
+        let idx = 0;
         function and(x, y) {
-            let vx = x.valueAtTime(t-TPD);
-            let vy = y.valueAtTime(t-TPD);
-            
-            if (vx == X || vy == X) return X;
-            if (vx == H && vy == H) return H;
+            if (x == X || y == X) return X;
+            if (x == H && y == H) return H;
             return L;
-            
         }
 
-        return eval(this.sigString);
+        function or(x, y) {
+            if (x == X || y == X) return X;
+            if (x == H || y == H) return H;
+            return L;
+        }
+        
+        function not(x) {
+            if (x == X) return X;
+            if (x == H) return L;
+            return H;
+        }
+
+        let obj = JSON.parse(this.sigString);
+        // maybe set tpd by obj.func.
+        
+        let args = obj.inputs.map(name => {
+            return wavegroup.getWaveform(name).sig.valueAtTime(t-2);
+        });
+        
+        if (obj.func == "and") return and(...args);
+        if (obj.func == "or") return or(...args);
+        if (obj.func == "not") return not(...args);
+        if (obj.func == "id") return args[0];
+        if (this.specialSigfunc) return this.specialSigfunc(wavegroup, t);
+
+        die("Signal function not recognized: " + obj.func);
     }    
 }

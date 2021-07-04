@@ -64,22 +64,26 @@
     <h1>Understanding the Dynamic Discipline</h1>
     <hr>
     
-    <br><br>
-    <p>Some wires have a little noise,</p>
-    <div id="wire-with-little-noise"></div>
+    <!-- <br><br> -->
+    <!-- <p>Some wires have a little noise,</p> -->
+    <!-- <div id="wire-with-little-noise"></div> -->
 
-    <p>Some wires have a lot!</p>
-    <div id="wire2"></div>
+    <!-- <p>Some wires have a lot!</p> -->
+    <!-- <div id="wire2"></div> -->
 
     <p> Combinational devices use the static discipline to mitigate noise. </p>
-    <p> Sequential devices use the <b>dynamic discipline</b> to mitigate glitches around clock edges. </p>
-    <p> The plan is to use feedback with a lenient mux to build a reliable D-latch. </p>
+    <p> Sequential memory devices use the <b>dynamic discipline</b> to
+      mitigate glitches around clock edges</p>
+    
+    <p> The plan is to use a lenient mux to build a reliable D-latch. </p>
     
     <p>
       Here are the steps outlined in the sequential logic section of
       the computation structures
-      <a href="https://computationstructures.org/notes/sequential_logic/notes.html">notes</a>
+      <a href="http://computationstructures.org/notes/sequential_logic/notes.html#TARGET_8.3">notes</a>
     </p>
+    
+    <div class="spacer200 lightline"></div>    
     
     <center><div class="bench-title"> A MUX WARM UP </div></center>
     <div id="bench1" class="bench">
@@ -99,38 +103,57 @@
     <div class="spacer200 lightline"></div>    
 
     <center><div class="bench-title"> SLIDE A TRANSITION </div></center>
-
-    <p> Reducing the time between cause and effect increases the
-    number of curiousity driven learning experiments we can do. In
-    this example $t_{PD}$ is observed in the waveforms as a lag on the
-    output </p>
     
     <div id="bench2" class="bench">
       <div id="schem1" class="schem" h="150" w="700">
         <div id="and2-slide" class="and2" in0="A" in1="B" out="C"></div>
       </div>
       
-      <div class="wavegroup" name="wavegroup1" h="50" w="700" duration="40">
-        <div class="waveform" name="C" sig="and(A,B)" func="true"></div>
+      <div class="wavegroup" name="wavegroup2" h="50" w="700" duration="40">
+        <div class="waveform" name="C" func="true"
+             sig='{"func": "and", "inputs": ["A", "B"], "out": "C"}'></div>
         <div class="waveform" name="B" sig="L 20 <H> 20"></div>
         <div class="waveform" name="A" sig="L 10 H 10 L 10 H 10"></div> 
-        <div class="timeline"></div>
+        <div class="timeline"></div>        
       </div>
     </div>
 
     <center><p> Try sliding the transition of the B waveform </p></center>
     <div class="spacer200 lightline"></div>    
     
-    
-    <p><b>To reliably latch $1$ means that changes on $D$ will not affect the 
-        $Q$ output</b></p>
+    <p>
+      Reducing the time between cause and effect increases makes
+      tinkering more fun. In this example $t_{PD}$ is observed in the
+      waveforms as a lag on the $C$ output
+    </p>
 
-    <center><p> Apply $1$ to $D$, holding $G=1$ </p></center>
-    <p> After $D$ and $G$ have been valid for $t_{PD}$, the new value $1$
-      appears at the mux output $Q$ (and hence at the input $Q'$). </p>
-    <p> Set $G=0$, while $Q’$ and $D$ hold $Q=D$ </p>
-    <p> After $T_{PD}$, $1$ appears at $Q=Q’$ </p>
-    <p> After another $t_{PD}$, $G=0$ and $Q’$ are sufficient to hold $Q=1$ independently of $D$ </p>
+
+    <center><div class="bench-title"> LATCH </div></center>
+    
+    <div id="bench3" class="bench">
+      <div id="schem3" class="schem" h="250" w="700">
+        <div id="latch-mux" class="mux" sel="G" in0="★" in1="D" out="Q"></div>
+      </div>
+      
+      <div class="wavegroup" name="wavegroup3" h="50" w="700" duration="40">
+        <div class="waveform" name="★" func="true" sig='{"func": "id", "inputs": ["Q"]}'></div>
+        <div class="waveform" name="Q" func="true" sig='{"func": "latch", "inputs": ["D", "G"]}'></div>
+        <div class="waveform" name="D" sig="X 10 L 10 <H> 10 L 15 "></div>
+        <div class="waveform" name="G" sig="L 20 H 20"></div> 
+        <div class="timeline"></div>        
+      </div>
+    </div>
+    
+    
+    <!-- <p><b>To reliably latch $1$ means that changes on $D$ will not affect the  -->
+    <!--     $Q$ output</b></p> -->
+
+    <!-- <center><p> Apply $1$ to $D$, holding $G=1$ </p></center> -->
+    <!-- <p> After $D$ and $G$ have been valid for $t_{PD}$, the new value $1$ -->
+    <!--   appears at the mux output $Q$ (and hence at the input $Q'$). </p> -->
+    <!-- <p> Set $G=0$, while $Q’$ and $D$ hold $Q=D$ </p> -->
+    <!-- <p> After $T_{PD}$, $1$ appears at $Q=Q’$ </p> -->
+    <!-- <p> After another $t_{PD}$, $G=0$ and $Q’$ are sufficient to hold $Q=1$ independently of $D$ </p> -->
     <hr>
     <h2>References</h2>
     

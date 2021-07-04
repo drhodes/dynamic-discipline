@@ -45,7 +45,6 @@ export class Waveform {
         }
         
         this.transitions = this.sig.transitions;
-        this.transition_handles = [];
         
         this.heightPx = h;
         this.widthPx = w;
@@ -59,6 +58,11 @@ export class Waveform {
         this.registerEvents();
     }
 
+    setSpecialSigFunc(f) {
+        this.sig.setSpecialSigFunc(f);
+    }
+    
+    
     updateTimeLine(x) {
         this.timeline.move(x, 0);
         this.currentTime = this.timeFromPx(x);
@@ -194,6 +198,7 @@ export class Waveform {
             let dx = ev.layerX - x;
             let dt = this.deltaTimeFromPx(dx);
             transition.updateHandleDeltaT(dt);
+            console.log([transition.id, transition.handleDeltaT]);
             handle.move(newx, y);
         };
         

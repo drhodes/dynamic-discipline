@@ -32,6 +32,46 @@ function slideATransition() {
 }
 slideATransition();
 
+function latch() {
+    let div = document.getElementById("bench3");
+    let bench = new LabBench(div);    
+    let mux2 = bench.schematic.addMux("latch-mux", 350, 50);
+    
+    mux2.nudgeLabel("Q", 1.3, -.37);
+    mux2.nudgeLabel("★", -1.8, -.37);
+    mux2.nudgeLabel("D", -1.8, -.37);
+    mux2.nudgeLabel("G", -.1, .7);
+    
+    let MUX_TPD = 2;
+    let MUX_TCD = 1;
+    
+    bench.specialSigfunc("Q", function(wavegroup, t) {
+        let Q = wavegroup.getWaveform("Q");
+        let D = wavegroup.getWaveform("D");
+        let G = wavegroup.getWaveform("G");
+        let clkEdge = G.transitions[1].t;
+        
+        let setupTime = 2 * MUX_TPD;
+        let observedSetupTime = clkEdge - D.transitions[2].adjTime();
+        
+        let setupTimeSatisfied = observedSetupTime >= setupTime;
+
+        if (setupTimeSatisfied) {
+            if (t > (clkEdge + MUX_TPD)) {
+                return D.sig.valueAtTime(t);
+            }
+        }
+        
+        // search through time. t_PD, t_CD, gonna have to make sure
+        // things are things.
+        
+        return X;
+    });
+    
+}
+latch();
+
+
 // function BuildFeedback1() {
 //     // this works, but the wires are a bit tedius, a better way?
 //     let schem = new Schematic(document.getElementById("schem1"));
