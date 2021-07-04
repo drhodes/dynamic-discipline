@@ -4,6 +4,7 @@ import * as color from './color.js';
 import {die, log} from './err.js';
 import {Poly} from './poly.js';
 import {Transition} from './transition.js';
+import {TransitionHandle} from './transition-handle.js';
 import {Sig, SigFunc} from './sig.js';
 import {L, H, X} from './transition.js';
 import {Attributes} from './attrs.js';
@@ -48,7 +49,7 @@ export class Waveform {
         
         this.heightPx = h;
         this.widthPx = w;
-        this.name  = this.attrs.get("name");
+        this.name = this.attrs.get("name");
        
         this.ctx = SVG.SVG().addTo(div);
         this.ctx.size(this.widthPx, this.heightPx);
@@ -61,7 +62,6 @@ export class Waveform {
     setSpecialSigFunc(f) {
         this.sig.setSpecialSigFunc(f);
     }
-    
     
     updateTimeLine(x) {
         this.timeline.move(x, 0);
@@ -157,66 +157,10 @@ export class Waveform {
     
     renderWave() {
         this.sig.transitions.slice(1).forEach(trans => {  
-            if (trans.isSliding()) this.initSlidingTransitionHandle(trans);
+            if (trans.isSliding()) {
+                let constants = {LEFT_MARGIN: LEFT_MARGIN};
+                new TransitionHandle(this.ctx, this, trans, constants);
+            }
         });
-    }
-
-    initSlidingTransitionHandle(transition) {
-        // moving transitions have slidetime in addition to the
-        // properties on plain transitions.
-        const BOUNDS_WIDTH = this.pxFromTime(transition.slidetime);
-        const BOUNDS_HEIGHT = 2;
-        const HANDLE_HEIGHT = 30;
-        const HANDLE_WIDTH = 10;
-        
-        let x = this.pxFromTime(transition.t) + LEFT_MARGIN;
-        let y = this.heightPx / 2 - HANDLE_HEIGHT/2;
-        
-        let boundsX = x - BOUNDS_WIDTH/2; 
-        let handleX = x - HANDLE_WIDTH/2;
-
-        function inBounds(x) {
-            var left = boundsX;
-            var right = boundsX + BOUNDS_WIDTH;
-            return left < x && x < right;
-        }
-        
-        let bounds = this.ctx
-            .rect(BOUNDS_WIDTH, BOUNDS_HEIGHT)
-            .fill("#eee")
-            .move(boundsX, y+HANDLE_HEIGHT/2 - BOUNDS_HEIGHT/2);
-        let handle = this.ctx.rect(HANDLE_WIDTH, HANDLE_HEIGHT); 
-                                 
-        let dragging = false;
-        handle
-            .move(handleX, y)
-            .fill(color.SCHEM_BLUE_TRANSLUCENT)
-        ;
-
-        let heel = ev => {
-            let newx = ev.layerX-HANDLE_WIDTH/2;
-            let dx = ev.layerX - x;
-            let dt = this.deltaTimeFromPx(dx);
-            transition.updateHandleDeltaT(dt);
-            console.log([transition.id, transition.handleDeltaT]);
-            handle.move(newx, y);
-        };
-        
-        handle.mouseover(function(ev) { this.fill(color.SCHEM_BLUE); });        
-        handle.mouseout(function(ev)  { this.fill(color.SCHEM_BLUE_TRANSLUCENT); });        
-        handle.mousedown(function(ev) {
-            dragging = inBounds(ev.layerX);
-            heel(ev);
-        });
-        handle.mouseup(function(ev)   { dragging = false; });
-        handle.mousemove(function(ev) { if (inBounds(ev.layerX) && dragging) heel(ev); });
-
-        this.rect.mousemove(ev => { if (inBounds(ev.layerX) && dragging) heel(ev); });
-        this.rect.mouseup(ev => { dragging = false; });
-        this.rect.mousedown(function(ev) { if (inBounds(ev.layerX)) { heel(ev); dragging = true; }});
-
-        bounds.mousemove(ev => { if (inBounds(ev.layerX) && dragging) heel(ev); });
-        bounds.mouseup(ev => { dragging = false; });
-        bounds.mousedown(function(ev) { if (inBounds(ev.layerX)) { heel(ev); dragging = true; }});
     }
 }

@@ -49,11 +49,10 @@ function latch() {
         let Q = wavegroup.getWaveform("Q");
         let D = wavegroup.getWaveform("D");
         let G = wavegroup.getWaveform("G");
-        let clkEdge = G.transitions[1].t;
         
+        let clkEdge = G.transitions[1].t;
         let setupTime = 2 * MUX_TPD;
         let observedSetupTime = clkEdge - D.transitions[2].adjTime();
-        
         let setupTimeSatisfied = observedSetupTime >= setupTime;
 
         if (setupTimeSatisfied) {
@@ -61,10 +60,8 @@ function latch() {
                 return D.sig.valueAtTime(t);
             }
         }
-        
         // search through time. t_PD, t_CD, gonna have to make sure
         // things are things.
-        
         return X;
     });
     

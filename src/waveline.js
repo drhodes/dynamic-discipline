@@ -26,8 +26,7 @@ export class WaveLine {
             .polyline(this.arr)
             .fill('none')
             .stroke({ width: 2, color: color.SCHEM_BLUE })
-        ;
-        this.polyline.move(x, 0);
+            .move(x, 0);
         this.refreshLoop();
     }
     
@@ -44,7 +43,7 @@ export class WaveLine {
                 for(var i = 0; i<POINTS_PER_FRAME; i++) {
                     let rval = Math.random();
                     let curVal = this.sig.valueAtTime(curTime);
-
+                    
                     switch(curVal) {
                     case H: 
                         ps[pidx].y = 2 + rval;

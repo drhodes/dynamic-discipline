@@ -13,6 +13,7 @@ export class Sig {
         this.transitions = [];
         this.sigString = sigString;
         this.parse(sigString);
+        this.setupTransitionLinks();
         this.specialSigfunc = null;
     }
 
@@ -20,6 +21,18 @@ export class Sig {
         this.specialSigfunc = f;
     }
 
+    setupTransitionLinks() {
+        // create a doubly-linked-list situation so transisitons can
+        // see their neighbors.
+        let ts = this.transitions;
+        if (ts.length < 2) return;
+        for (var i=1; i<ts.length-1; i++) {
+            ts[i].prevTransition = ts[i-1];
+            ts[i].nextTransition = ts[i+1];
+        }
+        ts[i].prevTransition = ts[i-1];
+    }
+    
     parse(sigString) {
         let regex = /(L|H|X|<H>|<L>)\s([0-9]*)/g;
         let matches = [...sigString.matchAll(regex)];
@@ -55,26 +68,23 @@ export class Sig {
             curTime += duration;
         });
     }
-    
+
     valueAtTime(t) {
         if (t < 0) return X;
+        let ts = this.transitions;
         
-        for (var i=0; i<this.transitions.length; i++) {
-            let onLastTransitionP = i == this.transitions.length - 1;            
-            var curTrans = this.transitions[i];
-            let cs = curTrans.isSliding();
-            
-            if (!onLastTransitionP) {
-                let nextTrans = this.transitions[i+1];
-                if (curTrans.t <= t && t <= (nextTrans.t + nextTrans.handleDeltaT)) {
-                    return curTrans.value; //curTrans.value;
-                }                
-            } else {
-                // on last transition
-                if (curTrans.t <= t <= curTrans.t + curTrans.duration) {
-                    return curTrans.value;
-                }                
+        if (ts.length == 0) return X;
+        if (ts.length == 1) return ts[0].value;
+        
+        for (var i=1; i<ts.length; i++) {
+            let trans = ts[i];
+            if (trans.prevTransition.adjTime() <= t && t <= trans.adjTime()) {
+                return trans.prevTransition.value;
             }
+            if (trans.adjTime <= t && t <= trans.nextTransition.adjTime()) {
+                return trans.value;
+            }
+            if (i == ts.length -1) return trans.value;
         }
         return X;
     }
@@ -123,7 +133,7 @@ export class SigFunc extends Sig {
         // maybe set tpd by obj.func.
         
         let args = obj.inputs.map(name => {
-            return wavegroup.getWaveform(name).sig.valueAtTime(t-2);
+            return wavegroup.getWaveform(name).sig.valueAtTime(t);
         });
         
         if (obj.func == "and") return and(...args);

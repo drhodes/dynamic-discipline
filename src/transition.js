@@ -12,8 +12,8 @@ export class Transition {
         this.value = logicVal;
         
         // The sig constructor needs to set these. g
-        this.prevTransitionValue = null;
-        this.nextTransitionValue = null;
+        this.prevTransition = null;
+        this.nextTransition = null;
         this.handleDeltaT = 0;
         this.id = Math.random();
     }
@@ -22,13 +22,17 @@ export class Transition {
         return this.t + this.handleDeltaT;
     }
     
-    set prevTransitionValue(v) { this._prevTransitionValue = v; }
-    set nextTransitionValue(v) { this._nextTransitionValue = v; }
+    set prevTransition(v) { this._prevTransition = v; }
+    set nextTransition(v) { this._nextTransition = v; }
 
-    get prevTransitionValue() { return this._prevTransitionValue; }
-    get nextTransitionValue() { return this._nextTransitionValue; }
+    get prevTransition() { return this._prevTransition; }
+    get nextTransition() { return this._nextTransition; }
     isSliding() { return false; }
+    
 }
+
+
+
 
 
 export class SlidingTransition extends Transition {
