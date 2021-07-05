@@ -36,7 +36,7 @@
 
       .wavegroup {
           background-color: #00000000;
-          padding: 0px 0 20px 0;          
+          padding: 0px 0 3px 0;          
           user-select: none
       }
       
@@ -98,6 +98,7 @@
         <div class="waveform" name="S"  sig="L 5 H 5 L 5 H 5 L 5 H 5 L 5 H 5" type="in"></div>
         <div class="timeline"></div>
       </div>
+        <div class="timeline"></div>        
     </div>
     
     <p> Control the mux by sampling the waveforms with your pointer </p>
@@ -111,12 +112,11 @@
       </div>
       
       <div class="wavegroup" name="wavegroup2" h="50" w="700" duration="40">
-        <div class="waveform" name="C" func="true"
-             sig='{"func": "and", "inputs": ["A", "B"], "out": "C"}'></div>
+        <div class="waveform" name="C" func="true" sig='{"func": "and", "inputs": ["A", "B"], "out": "C"}'></div>
         <div class="waveform" name="B" sig="L 20 <H> 20"></div>
         <div class="waveform" name="A" sig="L 10 H 10 L 10 H 10"></div> 
-        <div class="timeline"></div>        
       </div>
+      <div class="timeline"></div>        
     </div>
 
     <center><p> Try sliding the transition of the B waveform </p></center>
@@ -139,9 +139,8 @@
       <div class="wavegroup" name="wavegroup3" h="50" w="700" duration="40">
         <div class="waveform" name="★" func="true" sig='{"func": "id", "inputs": ["Q"]}'></div>
         <div class="waveform" name="Q" func="true" sig='{"func": "latch", "inputs": ["D", "G"]}'></div>
-        <div class="waveform" name="D" sig="H 10 L 10 <H> 10 L 10 "></div>
+        <div class="waveform" name="D" sig="X 10 X 10 <H> 5 <L> 10 "></div>
         <div class="waveform" name="G" sig="H 20 L 20"></div> 
-        <div class="timeline"></div>        
       </div>
     </div>
     

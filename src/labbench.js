@@ -3,6 +3,7 @@ import {die, log} from './err.js';
 import {Attributes} from './attrs.js';
 import {WaveGroup} from './wavegroup.js';
 import {Schematic} from './schem.js';
+import {Timeline} from './timeline.js';
 import {Chan} from './chan.js';
 
 // need to add a time ruler.
@@ -13,6 +14,7 @@ export class LabBench {
         this.div = div;
         this.schematic = null;
         this.wavegroup = null;
+        this.timeline = null;
 
         //
         //console.log(div.children);
@@ -24,21 +26,26 @@ export class LabBench {
             }
             if (atts.hasClass("wavegroup")) {
                 this.wavegroup = new WaveGroup(el, this);
+            } 
+            if (atts.hasClass("timeline")) {
+                this.timeline = new Timeline(el, this);
             }
+           
         });
 
         if (this.schematic == null) die ("schematic div not found in DOM");
         if (this.wavegroup == null) die ("wavegroup div not found in DOM");
+        if (this.wavegroup == null) die ("timeline div not found in DOM");
     }
 
     update(wavegroup) {
-        let sigmap = wavegroup.getSignalMap();        
+        let sigmap = wavegroup.getSignalMap();
+        let t = wavegroup.getCurTime();
+        this.timeline.update(t);
         this.schematic.update(sigmap);
-        //wavegroup.updateTimeLines(); // TODO make this more consistent.
     }
 
     specialSigfunc(signame, f) {
         this.wavegroup.getWaveform(signame).setSpecialSigFunc(f);
-        // figure out if installing f into Sig.valueAtTime makes sense.
     }
 }

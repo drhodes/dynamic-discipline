@@ -13,7 +13,6 @@ export class WaveGroup {
         let w = attrs.getAsNum("w");
         let h = attrs.getAsNum("h");
         let dur = attrs.getAsNum("duration");
-
         
         // iterate over items in div.
         // construct waveforms as they encountered.
@@ -58,6 +57,11 @@ export class WaveGroup {
         this.parent.update(this);
     }
 
+    getCurTime() {
+        let anyWaveform = this.waveforms[0]; // doesn't matter which one.
+        return anyWaveform.getCurrentTime();
+    }
+    
     getWaveform(name) {
         for (var wf of this.waveforms) {
             if (wf.name == name) return wf;

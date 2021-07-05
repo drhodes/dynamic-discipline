@@ -37,10 +37,17 @@ function latch() {
     let bench = new LabBench(div);    
     let mux2 = bench.schematic.addMux("latch-mux", 350, 50);
     
-    mux2.nudgeLabel("Q", 1.3, -.37);
+    mux2.nudgeLabel("Q", 1.3, .37);
     mux2.nudgeLabel("★", -1.8, -.37);
     mux2.nudgeLabel("D", -1.8, -.37);
     mux2.nudgeLabel("G", -.1, .7);
+
+    let p = [410, 110]; //mux2.getConnectionPx("Q");
+    let wire1 = bench.schematic.addWire("wire1", p[0], p[1]);
+    // let wire1 = schem.addWire("wire1", p[0], p[1]);
+    wire1.rt(50).up(75+10).lt(140).dn(45+10).done()
+    wire1.init().dashed().animate();
+
     
     let MUX_TPD = 2;
     let MUX_TCD = 1;
@@ -53,11 +60,16 @@ function latch() {
         let clkEdge = G.transitions[1].t;
         let setupTime = 2 * MUX_TPD;
         let observedSetupTime = clkEdge - D.transitions[2].adjTime();
-        let setupTimeSatisfied = observedSetupTime >= setupTime;
+        let setupTimeMet = observedSetupTime >= setupTime;
 
-        if (setupTimeSatisfied) {
+        let holdTime = MUX_TPD;
+        let observedHoldTime = D.transitions[3].adjTime() - clkEdge;
+        let holdTimeMet = observedHoldTime >= holdTime;
+        
+        if (setupTimeMet && holdTimeMet) {
             if (t > (clkEdge + MUX_TPD)) {
-                return D.sig.valueAtTime(t);
+                let value = D.sig.valueAtTime(20);
+                return value;
             }
         }
         // search through time. t_PD, t_CD, gonna have to make sure

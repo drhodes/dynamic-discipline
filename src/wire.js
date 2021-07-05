@@ -1,5 +1,6 @@
 import {die, log} from './err.js';
 import {Poly} from './poly.js';
+import {L, H, X} from './transition.js';
 
 // -----------------------------------------------------------------------------
 
@@ -28,6 +29,14 @@ export class Wire {
 
     color(c) {
         this.line.color(c);
+    }
+
+    setValue(v) {
+        switch (v) {
+        case H: this.line.color("red"); break;
+        case L: this.line.color("green"); break;
+        case X: this.line.color("grey"); break;
+        }
     }
     
     check_init() {
@@ -65,6 +74,10 @@ export class Wire {
         this._noiseAmplitude = n;
         return this;
     }
+
+    update(sigmap){
+        this.setValue(sigmap["Q"]);
+    } // 
     
     animate() {
         this.check_init();
