@@ -18,6 +18,14 @@
           padding: 0 0 10pt 0;
         }
 
+      input { font-size: 20pt;
+              /* font-family: 'Saira Condensed', serif;  */
+              font-family: 'Saira Condensed', serif;
+              margin: 0 auto !important;
+              float: none !important;              
+              padding: 0pt 20pt 0pt 0;
+            }
+      
       body {
           /* font-family: 'Literata', serif; */
           font-family: 'Saira Condensed', sans-serif;
@@ -142,7 +150,20 @@
         <div class="waveform" name="D" sig="X 10 X 10 <H> 5 <L> 10 "></div>
         <div class="waveform" name="G" sig="H 20 L 20"></div> 
       </div>
+      
+      <div class="timeline"></div>        
+
     </div>
+    <p>
+    By adjusting the sliders on the D signal and observing the output
+    Q, how long is the hold time, as measured in $ns$?</p>
+    <div>
+      <span>
+        <form><input type="text">        <button>check</button>
+</form>
+      </span>
+    </div>
+    
     
     <!-- <p><b>To reliably latch $1$ means that changes on $D$ will not affect the  -->
     <!--     $Q$ output</b></p> -->
