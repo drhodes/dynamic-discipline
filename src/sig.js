@@ -34,11 +34,11 @@ export class Sig {
     }
     
     parse(sigString) {
-        let regex = /(L|H|X|<H>|<L>)\s([0-9]*)/g;
+        let regex = /(L|H|X|<H>|<L>|<X>)\s([0-9]*)/g;
         let matches = [...sigString.matchAll(regex)];
 
         function isSlidingTransition(m) {
-            return m[1] == "<L>" || m[1] == "<H>";
+            return m[1] == "<L>" || m[1] == "<H>" || m[1] == "<X>";
         }
 
         let curTime = 0;
@@ -49,17 +49,20 @@ export class Sig {
                 m[1] == "<L>" ? L :
                 m[1] == "H" ? H :
                 m[1] == "<H>" ? H :
-                m[1] == "X" ? X : die("unrecognized logic value: "+ m[1]);
+                m[1] == "X" ? X :
+                m[1] == "<X>" ? X : die("unrecognized logic value: "+ m[1]);
             
             let duration = Number.parseFloat(m[2]);
             if (Number.isNaN(duration)) die("Couldn't parse: " + m[2] + " as a duration");
             
             if (isSlidingTransition(m)) {
-                const SLIDE_TIME = 10;
+                const SLIDE_TIME = 9;
                 // TODO, add syntax to regex to specify slide time.
                 // something like <div class="waveform" name="B" sig="L 20 <H14> 20"></div>
                 // where <H14> is a sliding transition to H with slidetime = 14.
                 // slidetime must be less than the surrounding durations.
+                // <2H6> for a slidetime of 8 but asymmetric
+
                 
                 this.transitions.push(new SlidingTransition(curTime, duration, value, SLIDE_TIME));
             } else {
