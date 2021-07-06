@@ -20,7 +20,9 @@ export class Term {
             .font({family: SCM_FONT, size: 20 })
             .move(x,y);
         
+        this.callbacks = [];
         this.updateValue(this.value);
+
     }
     
     nudgeLabel(dx, dy) {
@@ -43,9 +45,16 @@ export class Term {
         } else {
             this.wire.color("yellow");
         }
+        this.runCallbacks(v);
     }
 
+    runCallbacks(v) {
+        this.callbacks.forEach(cb => cb(v));
+    }
+    
     getPoints() { return this.wire.getPoints(); }
+    
+    onChangeValue(f) { this.callbacks.push(f); }
 }
 
 class WireState {

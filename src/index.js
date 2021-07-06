@@ -46,7 +46,14 @@ function latch() {
     wire1.rt(50).up(75+10).lt(140).dn(45+10).done()
     wire1.init().dashed().animate();
 
-    
+    // TODO this could be made nicer by establishing a "connection" between
+    // terminals and wires. maybe later.
+    mux2.getTerm("out").onChangeValue(function(newval) {
+        // TODO Mux.getTerm should probably be a device method and
+        // should definitely use the user supplied terminal name
+        wire1.setValue(newval);
+    });
+
     let MUX_TPD = 2;
     let MUX_TCD = 1;
     
