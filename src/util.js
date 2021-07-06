@@ -5,3 +5,7 @@ export function durationFromString(s) {
     if (Number.isNaN(duration)) die("Couldn't parse: " + s + " as a duration");
     return duration;
 }
+
+export function contains(s, c) {
+    return s.indexOf(c) != -1;
+}
