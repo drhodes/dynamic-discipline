@@ -12,13 +12,13 @@ export class Timeline {
 
         this.text = ctx
             .text("")
-            .fill(color.SCHEM_BLUE)
+            .fill(color.GRAY5)
             .font({family: SCM_FONT, size: 16 })
             .move(300, 2);
     }
     
     update(t, x) {
-        let timeStr = (""+t).slice(0, 6);
+        let timeStr = (""+t).slice(0, 5);
         this.text.text(timeStr + "ns");
 
         // don't let the text exit stage right.
