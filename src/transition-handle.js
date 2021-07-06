@@ -59,33 +59,35 @@ export class TransitionHandle {
             handle.move(newx, y);
         };
         
-        handle.mouseover(function(ev) { this.fill(color.SCHEM_BLUE); });        
-        handle.mouseout(function(ev)  { this.fill(color.SCHEM_BLUE_TRANSLUCENT); });
-        
-        handle.mousedown(function(ev) {
-            dragging = inBounds(ev.layerX);
-            heel(ev);
+        handle.mouseover(function(ev) {
+            // this is a reference to: handle
+            this.fill(color.SCHEM_BLUE);
         });
         
-        handle.mouseup(function(ev)   { dragging = false; });
-        handle.mousemove(function(ev) {
-            if (inBounds(ev.layerX) && dragging) heel(ev);
-        });
-
-        this.parent.rect.mousemove(ev => {
-            if (inBounds(ev.layerX) && dragging) heel(ev);
-        });
-        this.parent.rect.mouseup(ev => { dragging = false; });
-        this.parent.rect.mousedown(function(ev) {
-            if (inBounds(ev.layerX)) {
-                heel(ev); dragging = true; }
+        handle.mouseout(function(ev) {
+            this.fill(color.SCHEM_BLUE_TRANSLUCENT);
         });
         
-        bounds.mousemove(ev => { if (inBounds(ev.layerX) && dragging) heel(ev); });
-        bounds.mouseup(ev => { dragging = false; });
+        handle.mousedown(ev => { dragging = inBounds(ev.layerX); heel(ev); });
+        handle.mousemove(ev => { if (inBounds(ev.layerX) && dragging) heel(ev); });
+        this.parent.rect.mousemove(ev => { if (inBounds(ev.layerX) && dragging) heel(ev); });
+        
+          
+        bounds.mousemove(ev => {
+            if (!inBounds(ev.layerX)) {
+                dragging = false;
+            } else if (inBounds(ev.layerX) && dragging) {
+                heel(ev);
+            }
+        });
+        
         bounds.mousedown(function(ev) { if (inBounds(ev.layerX)) { heel(ev); dragging = true; }});
-    }
+        handle.mouseup(ev => dragging = false );
+        bounds.mouseup(ev => dragging = false );
 
+        // NEWS events bound to this.ctx are much more reliable.
+        this.ctx.mouseup(ev => dragging = false);
+    }
 }
 
 
