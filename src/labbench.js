@@ -4,7 +4,6 @@ import {Attributes} from './attrs.js';
 import {WaveGroup} from './wavegroup.js';
 import {Schematic} from './schem.js';
 import {Timeline} from './timeline.js';
-import {Chan} from './chan.js';
 
 // need to add a time ruler.
 
