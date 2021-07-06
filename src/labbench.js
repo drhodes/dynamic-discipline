@@ -38,7 +38,8 @@ export class LabBench {
     update(wavegroup) {
         let sigmap = wavegroup.getSignalMap();
         let t = wavegroup.getCurTime();
-        this.timeline.update(t);
+        let x = wavegroup.waveforms[0].pxFromTime(t);
+        this.timeline.update(t, x);
         this.schematic.update(sigmap);
     }
 
