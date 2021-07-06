@@ -6,8 +6,6 @@ import {die, log} from './err.js';
 
 export class TransitionHandle {
     constructor(ctx, parent, transition, constants) {
-        console.log("asdf");
-
         this.parent = parent;
         this.ctx = ctx;
         this.transition = transition;
@@ -45,11 +43,14 @@ export class TransitionHandle {
         let handle = this.ctx.rect(HANDLE_WIDTH, HANDLE_HEIGHT); 
         
         let dragging = false;
+        
         handle
             .move(handleX, y)
             .fill(color.SCHEM_BLUE_TRANSLUCENT)
         ;
 
+        // might actually need a state machine for this.
+        
         let heel = ev => {
             let newx = ev.layerX-HANDLE_WIDTH/2;
             let dx = ev.layerX - x;

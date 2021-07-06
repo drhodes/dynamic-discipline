@@ -31,10 +31,6 @@ export class Transition {
     
 }
 
-
-
-
-
 export class SlidingTransition extends Transition {
     constructor(t, duration, logicValue, slidetime) {        
         super(t, duration, logicValue);        
@@ -43,7 +39,6 @@ export class SlidingTransition extends Transition {
 
     updateHandleDeltaT(dt) {
         this.handleDeltaT = dt;
-        //xconsole.log("updating handleDeltaT
     }
 
 

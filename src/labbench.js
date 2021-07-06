@@ -15,11 +15,8 @@ export class LabBench {
         this.schematic = null;
         this.wavegroup = null;
         this.timeline = null;
-
-        //
-        //console.log(div.children);
+        
         Object.values(div.children).forEach( el => {             
-            console.log(this);
             let atts = new Attributes(el);
             if (atts.hasClass("schem")) {
                 this.schematic = new Schematic(el, this);

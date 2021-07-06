@@ -75,9 +75,7 @@ export class Wire {
         return this;
     }
 
-    update(sigmap){
-        this.setValue(sigmap["Q"]);
-    } // 
+    update() {}
     
     animate() {
         this.check_init();

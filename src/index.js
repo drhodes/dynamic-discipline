@@ -8,7 +8,6 @@ import {LabBench} from './labbench.js';
 
 function aMuxWarmUp() {
     let div = document.getElementById("bench1");
-    console.log(div);
     let bench = new LabBench(div);    
     let schem = bench.schematic;
     let mux2 = schem.addMux("mux-2", 350, 50);
@@ -21,7 +20,6 @@ aMuxWarmUp();
 
 function slideATransition() {
     let div = document.getElementById("bench2");
-    console.log(div);
     let bench = new LabBench(div);    
     let schem = bench.schematic;
     let and2 = schem.addAnd2("and2-slide", 320, 30);
@@ -72,8 +70,6 @@ function latch() {
                 return value;
             }
         }
-        // search through time. t_PD, t_CD, gonna have to make sure
-        // things are things.
         return X;
     });
     
