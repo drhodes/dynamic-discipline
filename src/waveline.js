@@ -25,7 +25,7 @@ export class WaveLine {
         this.polyline = ctx
             .polyline(this.arr)
             .fill('none')
-            .stroke({ width: 2, color: color.SCHEM_BLUE })
+            .stroke({ width: 2.5, color: color.SCHEM_BLUE })
             .move(x, 0);
         this.refreshLoop();
     }
@@ -53,7 +53,8 @@ export class WaveLine {
                         break;
                     case X : 
                         let centerY = this.h/2;
-                        let noiseOffset = this.h/10 * rval;
+                        let noiseMag = this.h/10;
+                        let noiseOffset = noiseMag/2 - noiseMag*rval;
                         ps[pidx].y = centerY + noiseOffset;
                         break;
                     }

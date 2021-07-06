@@ -20,12 +20,13 @@ export class TransitionHandle {
         
         // moving transitions have slidetime in addition to the
         // properties on plain transitions.
-        const BOUNDS_WIDTH = this.parent.pxFromTime(transition.slidetime);
-        const BOUNDS_HEIGHT = 2;
-        const HANDLE_HEIGHT = 30;
+        const LEFT_MARGIN = this.constants.LEFT_MARGIN;
+        const HANDLE_HEIGHT = this.parent.heightPx; //30;
         const HANDLE_WIDTH = 10;
+        const BOUNDS_WIDTH = this.parent.pxFromTime(transition.slidetime);
+        const BOUNDS_HEIGHT = HANDLE_HEIGHT;
         
-        let x = this.parent.pxFromTime(transition.t) + this.constants.LEFT_MARGIN;
+        let x = this.parent.pxFromTime(transition.t) + LEFT_MARGIN;
         let y = this.parent.heightPx / 2 - HANDLE_HEIGHT/2;
         
         let boundsX = x - BOUNDS_WIDTH/2; 
@@ -39,7 +40,7 @@ export class TransitionHandle {
         
         let bounds = this.ctx
             .rect(BOUNDS_WIDTH, BOUNDS_HEIGHT)
-            .fill("#eee")
+            .fill(color.GRAY5T1)
             .move(boundsX, y+HANDLE_HEIGHT/2 - BOUNDS_HEIGHT/2);
         let handle = this.ctx.rect(HANDLE_WIDTH, HANDLE_HEIGHT); 
         
