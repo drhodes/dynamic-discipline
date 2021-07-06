@@ -136,12 +136,7 @@
 
     <center><p> Try sliding the transition of the B waveform </p></center>
     <div class="spacer200 lightline"></div>    
-    
-    <p>
-      Reducing the time between cause and effect increases makes
-      tinkering more fun. In this example $t_{PD}$ is observed in the
-      waveforms as a lag on the $C$ output
-    </p>
+   
 
 
     <center><div class="bench-title"> Latching a digital 1 </div></center>
@@ -154,22 +149,24 @@
       <div class="wavegroup" name="wavegroup3" h="50" w="700" duration="40">
         <div class="waveform" name="★" func="true" sig='{"func": "id", "inputs": ["Q"]}'></div>
         <div class="waveform" name="Q" func="true" sig='{"func": "latch", "inputs": ["D", "G"]}'></div>
-        <div class="waveform" name="D" sig="X 10 X 10 <H> 5 <L> 10 "></div>
+        <div class="waveform" name="D" sig="X 10 X 10 <H> 5 <X> 15 "></div>
         <div class="waveform" name="G" sig="H 20 L 20"></div> 
       </div>
       
       <div class="timeline"></div>        
 
     </div>
+    
     <p>
-    By adjusting the sliders on the D signal and observing the output
-    Q, how long is the hold time, as measured in $ns$?</p>
-    <div>
-      <span>
-        <form><input type="text">        <button>check</button>
-</form>
-      </span>
-    </div>
+      By adjusting the sliders on the D signal and observing the output
+      Q, how long is the hold time, as measured in $ns$?
+      <div class="question">
+        <span>
+          <form><input type="text"> <button>check</button> </form>
+        </span>
+      </div>
+    </p>
+    
     
     
     <!-- <p><b>To reliably latch $1$ means that changes on $D$ will not affect the  -->

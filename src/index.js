@@ -36,14 +36,13 @@ function latch() {
     let mux2 = bench.schematic.addMux("latch-mux", 350, 50);
     
     mux2.nudgeLabel("Q", 1.3, .37);
-    mux2.nudgeLabel("★", -1.8, -.37);
+    mux2.nudgeLabel("★", -1.9, -.37);
     mux2.nudgeLabel("D", -1.8, -.37);
     mux2.nudgeLabel("G", -.1, .7);
 
-    let p = [410, 110]; //mux2.getConnectionPx("Q");
+    let p = [410, 110]; // TODO get this value from mux terminal.
     let wire1 = bench.schematic.addWire("wire1", p[0], p[1]);
-    // let wire1 = schem.addWire("wire1", p[0], p[1]);
-    wire1.rt(50).up(75+10).lt(140).dn(45+10).done()
+    wire1.rt(50).up(75+10).lt(140).dn(45+10).done();
     wire1.init().dashed().animate();
 
     // TODO this could be made nicer by establishing a "connection" between
@@ -72,9 +71,16 @@ function latch() {
         let holdTimeMet = observedHoldTime >= holdTime;
         
         if (setupTimeMet && holdTimeMet) {
-            if (t > (clkEdge + MUX_TPD)) {
+            if (t > (D.transitions[2].adjTime() + MUX_TPD)) {
                 let value = D.sig.valueAtTime(20);
                 return value;
+            }
+        } else {
+            let valG = G.sig.valueAtTime(t);
+            if (valG == H) {
+                return D.sig.valueAtTime(t - MUX_TPD);
+            } else {
+                return D.sig.valueAtTime(2); // noise
             }
         }
         return X;
