@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>The Dynamic Discipline</title>
+    <link href="dist/style.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  
+  <body>
+    <h1>WORK IN PROGRESS</h1>    
+    
+    <center><div class="bench-title"> A MUX WARM UP </div></center>
+    <div id="bench1" class="bench">
+      <div id="schem1" class="schem" h="250" w="700">
+        <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>
+      </div>
+      <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="35" w="700" duration="40">
+        <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" type="out" ></div>
+        <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10" type="in"></div>
+        <div class="waveform" name="D1" sig="H 20 L 20" type="in"></div>
+        <div class="waveform" name="S"  sig="L 5 H 5 L 5 H 5 L 5 H 5 L 5 H 5" type="in"></div>
+        <div class="timeline"></div>
+      </div>
+        <div class="timeline"></div>        
+    </div>
+    
+    <p> Control the mux by sampling the waveforms with your cursor </p>
+
+    
+    
+    <!-- ----------------------------------------------------------------------------- -->
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"></script>
+    
+    <script>
+      MathJax = {
+          tex: {
+              inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+              fontCache: 'global'
+          }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+
+    <script src="dist/main.js"></script>    
+  </body>  
+</html>
+
+
