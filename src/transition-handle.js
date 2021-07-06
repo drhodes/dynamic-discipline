@@ -14,32 +14,33 @@ export class TransitionHandle {
     }
 
     setup() {
-        let transition = this.transition;
+        let tr = this.transition;
         
         // moving transitions have slidetime in addition to the
         // properties on plain transitions.
         const LEFT_MARGIN = this.constants.LEFT_MARGIN;
         const HANDLE_HEIGHT = this.parent.heightPx; //30;
         const HANDLE_WIDTH = 10;
-        const BOUNDS_WIDTH = this.parent.pxFromTime(transition.slidetime);
-        const BOUNDS_HEIGHT = HANDLE_HEIGHT;
         
-        let x = this.parent.pxFromTime(transition.t) + LEFT_MARGIN;
+        let x = this.parent.pxFromTime(tr.t) + LEFT_MARGIN;
         let y = this.parent.heightPx / 2 - HANDLE_HEIGHT/2;
         
-        let boundsX = x - BOUNDS_WIDTH/2; 
+        const BOUNDS_LEFT = x - this.parent.pxFromTime(tr.slideTimeLeft);
+        const BOUNDS_RIGHT = x + this.parent.pxFromTime(tr.slideTimeRight);
+        const BOUNDS_WIDTH = BOUNDS_RIGHT - BOUNDS_LEFT;
+        const BOUNDS_HEIGHT = HANDLE_HEIGHT;
+        
+        
         let handleX = x - HANDLE_WIDTH/2;
 
         function inBounds(x) {
-            var left = boundsX;
-            var right = boundsX + BOUNDS_WIDTH;
-            return left < x && x < right;
+            return BOUNDS_LEFT < x && x < BOUNDS_RIGHT;
         }
-        
+        //debugger;
         let bounds = this.ctx
             .rect(BOUNDS_WIDTH, BOUNDS_HEIGHT)
             .fill(color.GRAY5T1)
-            .move(boundsX, y+HANDLE_HEIGHT/2 - BOUNDS_HEIGHT/2);
+            .move(BOUNDS_LEFT, 0);
         let handle = this.ctx.rect(HANDLE_WIDTH, HANDLE_HEIGHT); 
         
         let dragging = false;
@@ -55,7 +56,7 @@ export class TransitionHandle {
             let newx = ev.layerX-HANDLE_WIDTH/2;
             let dx = ev.layerX - x;
             let dt = this.parent.deltaTimeFromPx(dx);
-            transition.updateHandleDeltaT(dt);
+            tr.updateHandleDeltaT(dt);
             handle.move(newx, y);
         };
         

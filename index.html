@@ -11,13 +11,6 @@
     <h1>Understanding the Dynamic Discipline</h1>
     <p> “Make it work, make it right, make it fast.” – Kent Beck </p>
     <hr>
-    
-    <!-- <br><br> -->
-    <!-- <p>Some wires have a little noise,</p> -->
-    <!-- <div id="wire-with-little-noise"></div> -->
-
-    <!-- <p>Some wires have a lot!</p> -->
-    <!-- <div id="wire2"></div> -->
 
     <p> Combinational devices use the static discipline to mitigate noise. </p>
     <p> Sequential memory devices use the <b>dynamic discipline</b> to
@@ -25,9 +18,8 @@
     
     <p> The plan is to use a lenient mux to build a reliable D-latch. </p>
     
-    <p>
-      Here are the steps outlined in the sequential logic section of
-      the computation structures
+    <p> Here are the steps outlined in the sequential logic section of
+    the computation structures
       <a href="http://computationstructures.org/notes/sequential_logic/notes.html#TARGET_8.3">notes</a>
     </p>
     
@@ -39,7 +31,7 @@
         <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>
       </div>
       <div id="wavegroup1" class="wavegroup" name="wavegroup1" h="35" w="700" duration="40">
-        <div class="waveform" name="Q"  sig="L 6 H 5 H 5 H 5 L 5 L 5 H 5 L 5" type="out" ></div>
+        <div class="waveform" name="Q"  sig="H 5 H 5 H 5 L 5 L 5 H 5 L 5" type="out" ></div>
         <div class="waveform" name="D0" sig="L 10 H 10 L 10 H 10" type="in"></div>
         <div class="waveform" name="D1" sig="H 20 L 20" type="in"></div>
         <div class="waveform" name="S"  sig="L 5 H 5 L 5 H 5 L 5 H 5 L 5 H 5" type="in"></div>
@@ -60,7 +52,7 @@
       
       <div class="wavegroup" name="wavegroup2" h="50" w="700" duration="40">
         <div class="waveform" name="C" func="true" sig='{"func": "and", "inputs": ["A", "B"], "out": "C"}'></div>
-        <div class="waveform" name="B" sig="L 20 <H> 20"></div>
+        <div class="waveform" name="B" sig="L 20 <5H5> 20"></div>
         <div class="waveform" name="A" sig="L 10 H 10 L 10 H 10"></div> 
       </div>
       <div class="timeline"></div>        
@@ -78,10 +70,13 @@
         <div id="latch-mux" class="mux" sel="G" in0="★" in1="D" out="Q"></div>
       </div>
       
+      <div class="slider" name="MuxTpd" min="0" max="4"></div>
+      
       <div class="wavegroup" name="wavegroup3" h="50" w="700" duration="40">
         <div class="waveform" name="★" func="true" sig='{"func": "id", "inputs": ["Q"]}'></div>
-        <div class="waveform" name="Q" func="true" sig='{"func": "latch", "inputs": ["D", "G"]}'></div>
-        <div class="waveform" name="D" sig="X 10 X 10 <H> 5 <X> 15 "></div>
+        <div class="waveform" name="Q" func="true"
+             sig='{"func": "latch", "inputs": ["D", "G"]}'></div>
+        <div class="waveform" name="D" sig="X 10 X 10 <10H0> 5 <4X7> 15 "></div>
         <div class="waveform" name="G" sig="H 20 L 20"></div> 
       </div>
       
@@ -98,8 +93,6 @@
         </span>
       </div>
     </p>
-    
-    
     
     <!-- <p><b>To reliably latch $1$ means that changes on $D$ will not affect the  -->
     <!--     $Q$ output</b></p> -->

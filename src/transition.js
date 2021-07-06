@@ -8,8 +8,8 @@ export class Transition {
     constructor(t, duration, logicVal) {        
         this.t = t ; // this should be absolute time when transition occurs!
         this.duration = duration;
-        // L, H or X.        
-        this.value = logicVal;
+        this.value = logicVal; // L, H or X.        
+
         
         // The sig constructor needs to set these. g
         this.prevTransition = null;
@@ -32,15 +32,15 @@ export class Transition {
 }
 
 export class SlidingTransition extends Transition {
-    constructor(t, duration, logicValue, slidetime) {        
+    constructor(t, duration, logicValue, slideTimeLeft, slideTimeRight) {        
         super(t, duration, logicValue);        
-        this.slidetime = slidetime;
+        this.slideTimeLeft = slideTimeLeft;
+        this.slideTimeRight = slideTimeRight;
     }
 
     updateHandleDeltaT(dt) {
         this.handleDeltaT = dt;
     }
-
 
     get handleDeltaT() { return this._handleDeltaT; }
     set handleDeltaT(dt) { this._handleDeltaT = dt; }
