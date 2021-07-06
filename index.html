@@ -12,20 +12,20 @@
     <p> “Make it work, make it right, make it fast.” – Kent Beck </p>
     <hr>
 
-    <p> Combinational devices use the static discipline to mitigate noise. </p>
-    <p> Sequential memory devices use the <b>dynamic discipline</b> to
-      mitigate glitches around clock edges</p>
+    <!-- <p> Combinational devices use the static discipline to mitigate noise. </p> -->
+    <!-- <p> Sequential memory devices use the <b>dynamic discipline</b> to -->
+    <!--   mitigate glitches around clock edges</p> -->
     
-    <p> The plan is to use a lenient mux to build a reliable D-latch. </p>
+    <!-- <p> The plan is to use a lenient mux to build a reliable D-latch. </p> -->
     
-    <p> Here are the steps outlined in the sequential logic section of
-    the computation structures
-      <a href="http://computationstructures.org/notes/sequential_logic/notes.html#TARGET_8.3">notes</a>
-    </p>
+    <!-- <p> Here are the steps outlined in the sequential logic section of -->
+    <!-- the computation structures -->
+    <!--   <a href="http://computationstructures.org/notes/sequential_logic/notes.html#TARGET_8.3">notes</a> -->
+    <!-- </p> -->
     
     <div class="spacer200 lightline"></div>    
     
-    <center><div class="bench-title"> A MUX WARM UP </div></center>
+    <center><div class="bench-title"> A Mux Warm Up </div></center>
     <div id="bench1" class="bench">
       <div id="schem1" class="schem" h="250" w="700">
         <div id="mux-2" sel="S" in0="D0" in1="D1" out="Q"></div>
@@ -70,28 +70,45 @@
         <div id="latch-mux" class="mux" sel="G" in0="★" in1="D" out="Q"></div>
       </div>
       
-      <div class="slider" name="MuxTpd" min="0" max="4"></div>
+      <div class="slider" name="MuxTpd" min="0" max="4" default="3" x="160" y="4"></div>
       
       <div class="wavegroup" name="wavegroup3" h="50" w="700" duration="40">
         <div class="waveform" name="★" func="true" sig='{"func": "id", "inputs": ["Q"]}'></div>
         <div class="waveform" name="Q" func="true"
              sig='{"func": "latch", "inputs": ["D", "G"]}'></div>
-        <div class="waveform" name="D" sig="X 10 X 10 <10H0> 5 <4X7> 15 "></div>
+        <div class="waveform" name="D" sig="X 10 X 5 <5H5> 10 <4X7> 15 "></div>
         <div class="waveform" name="G" sig="H 20 L 20"></div> 
       </div>
       
       <div class="timeline"></div>        
 
     </div>
+
+    <p> There is a new widget, can you find it? Just above the
+      waveforms is a slider that can set the $t_{PD}$ of the mux.
+      Also, check out the $D$ signal, it has two transitions that can
+      slide.  The left transition can be used to obey the setup time.
+      The right sliding transition can be used to obey the hold time.
+    </p>
+
+    <p> For reference, if you place your cursor on the $G$ transition,
+      it should observed to happen at about $20ns$.
+    </p>
     
     <p>
-      By adjusting the sliders on the D signal and observing the output
-      Q, how long is the hold time, as measured in $ns$?
-      <div class="question">
-        <span>
-          <form><input type="text"> <button>check</button> </form>
-        </span>
-      </div>
+      Try setting the $t_{PD}$ of the mux to about $3ns$. What must
+      $t_{\text{setup}}$ and $t_{\text{hold}}$ be? Try adjusting the
+      transitions on the $D$ signal to latch a digital $1$.
+    </p>
+    
+    <p>
+      <!-- By adjusting the sliders on the D signal and observing the output -->
+      <!-- Q, how long is the hold time, as measured in $ns$? -->
+      <!-- <div class="question"> -->
+      <!--   <span> -->
+      <!--     <form><input type="text"> <button>check</button> </form> -->
+      <!--   </span> -->
+      <!-- </div> -->
     </p>
     
     <!-- <p><b>To reliably latch $1$ means that changes on $D$ will not affect the  -->
