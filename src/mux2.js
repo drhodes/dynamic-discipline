@@ -54,6 +54,12 @@ export class Mux2 extends Device {
         terminals["sel"].rotate(-90);
     }
 
+    getTerm(termName) {
+        let term = this.terminals[termName];
+        if (term) return term;
+        die("Could not find terminal with name: " + termName);
+    }
+    
     // this should be a method an interface called Device.
     // getConnectionPx(termName) {
     //     // get the absolute pixel position of a terminal give a
