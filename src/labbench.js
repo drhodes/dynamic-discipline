@@ -4,6 +4,7 @@ import {Attributes} from './attrs.js';
 import {WaveGroup} from './wavegroup.js';
 import {Schematic} from './schem.js';
 import {Timeline} from './timeline.js';
+import {Slider} from './slider.js';
 
 // need to add a time ruler.
 
@@ -14,6 +15,7 @@ export class LabBench {
         this.schematic = null;
         this.wavegroup = null;
         this.timeline = null;
+        this.widgets = [];
         
         Object.values(div.children).forEach( el => {             
             let atts = new Attributes(el);
@@ -26,12 +28,16 @@ export class LabBench {
             if (atts.hasClass("timeline")) {
                 this.timeline = new Timeline(el, this);
             }
-           
+            if (atts.hasClass("slider")) {
+                this.widgets.push(new Slider(el, this));
+            }
+
+            
         });
 
         if (this.schematic == null) die ("schematic div not found in DOM");
         if (this.wavegroup == null) die ("wavegroup div not found in DOM");
-        if (this.wavegroup == null) die ("timeline div not found in DOM");
+        //if (this.wavegroup == null) die ("timeline div not found in DOM");
     }
 
     update(wavegroup) {
